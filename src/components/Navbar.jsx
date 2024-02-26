@@ -27,7 +27,7 @@ function Navbar() {
                             </svg>
                         </button>
                     </div>
-                    <div className={`sm:flex ${isOpen ? 'flex flex-col rounded-lg shadow-md absolute top-12 right-0 bg-[#f8f2e9] p-4 sm:flex-row sm:relative sm:top-0' : 'hidden sm:visible'} sm:items-center sm:gap-40`}>
+                    <div className={`sm:flex ${isOpen ? 'flex flex-col rounded-b-lg borde shadow-md absolute top-12 right-0 bg-[#f8f2e9] p-4 sm:flex-row sm:relative sm:top-0' : 'hidden sm:visible'} sm:items-center sm:gap-40`}>
                         <div className="flex flex-col sm:flex-row">
                             <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/bookshelf' ? 'text-[#ff5277]' : ''}`}>Bookshelf</NavLink>
                             <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/statistics' ? 'text-[#ff5277]' : ''}`}>Statistics</NavLink>
