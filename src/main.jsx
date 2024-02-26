@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import './index.css'
 
-import Layout from './pages/Layoute';
+import Layout from './pages/Layout';
 import Home from './pages/Home';
 
 function App() {
