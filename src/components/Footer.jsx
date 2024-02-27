@@ -1,11 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Logo from '../assets/StoryDataLogo.png'
 
 function Footer() {
     return (
         <footer className="bg-[#f7f2e3] mt-10">
-            <div className="container mx-auto min-h-10 flex p-4 items-center">
-                <Link>Logo</Link>
+            <div className="container mx-auto min-h-10 flex p-4 items-center md:w-2/3 w-11/12">
+                <Link>
+                    <img
+                        src={Logo}
+                        alt="logo"
+                        className="w-24 h-24" />
+                </Link>
                 <div className="ml-auto sm:space-x-4 flex flex-col sm:flex-row">
                     <Link>Profile</Link>
                     <Link>About</Link>

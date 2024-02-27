@@ -1,5 +1,6 @@
 import React from 'react'
 import GoBackBtn from '../components/GoBackBtn'
+import Logo from '../assets/StoryDataLogo.png'
 
 function SignUp() {
     return (
@@ -9,6 +10,10 @@ function SignUp() {
             </div>
             <div className="container bg-[#f7f2e3] flex mx-auto rounded-md p-6 shadow-md">
                 <div className="flex mx-auto flex-col">
+                    <img
+                        src={Logo}
+                        alt="logo"
+                        className="w-36 h-36 mx-auto" />
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"

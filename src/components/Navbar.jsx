@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import Logo from '../assets/StoryDataLogo.png'
 
 function SignedIn() {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,9 +12,12 @@ function SignedIn() {
 
     return (
         <header className="flex justify-center bg-[#f8f2e9] shadow-md mb-10">
-            <div className="md:w-2/3 w-11/12 mx-auto flex justify-between items-center p-2">
+            <div className="md:w-2/3 w-11/12 mx-auto flex justify-between items-center">
                 <NavLink to="/">
-                    Logo
+                    <img
+                        src={Logo}
+                        alt="logo"
+                        className="w-24 h-24" />
                 </NavLink>
                 <div className="ml-auto sm:ml-0 flex items-center text-black">
                     <div className="sm:hidden">
@@ -36,7 +40,11 @@ function SignedIn() {
 
                     </div>
                 </div>
-                <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/profile' ? 'text-[#ff5277]' : ''}`}>Profile</NavLink>
+                <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/profile' ? 'text-[#ff5277]' : ''}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-7">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                </NavLink>
             </div>
         </header>
     );
@@ -46,13 +54,23 @@ function SignedOut() {
     return (
         <header className="flex justify-center bg-[#f8f2e9] shadow-md mb-10">
             <div className="md:w-2/3 w-11/12 mx-auto flex justify-between items-center p-2">
-                <NavLink to="/">Logo</NavLink>
+                <NavLink to="/">
+                    <img
+                        src={Logo}
+                        alt="logo"
+                        className="w-24 h-24" />
+                </NavLink>
                 <div className="space-x-2">
                     <NavLink to="/">About</NavLink>
                     <NavLink to="/">Blog</NavLink>
                 </div>
-                <button className="border border-black p-2 rounded-md">
-                    <NavLink to="/login">Log in</NavLink>
+                <button className="border border-black rounded-md flex p-2">
+                    <NavLink to="/login">
+                        Log in
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 inline">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </NavLink>
                 </button>
             </div>
         </header>
