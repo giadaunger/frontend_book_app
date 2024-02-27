@@ -24,7 +24,8 @@ function Login() {
                         <a href="/" className="text-blue-500"> Create one</a>
                     </p>
                 </div>
-            </div></div>
+            </div>
+        </div>
     )
 }
 
