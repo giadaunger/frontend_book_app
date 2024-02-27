@@ -4,7 +4,7 @@ import Logo from '../assets/StoryDataLogo.png'
 
 function Footer() {
     return (
-        <footer className="bg-[#f7f2e3] mt-10">
+        <footer className="bg-[#f8f2e9] mt-10">
             <div className="container mx-auto min-h-10 flex p-4 items-center md:w-2/3 w-11/12">
                 <Link>
                     <img
