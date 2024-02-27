@@ -2,7 +2,7 @@ import React from 'react'
 
 function SignUp() {
     return (
-        <div className="container bg-[#f7f2e3] w-3/4 sm:w-2/4 flex mx-auto rounded-md p-6">
+        <div className="container bg-[#f7f2e3] w-3/4 sm:w-2/4 flex mx-auto rounded-md p-6 shadow-md">
             <div className="flex mx-auto flex-col">
                 <label htmlFor="username">Username:</label>
                 <input
