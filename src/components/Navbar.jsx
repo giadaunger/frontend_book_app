@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-function Navbar() {
+function SignedIn() {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
 
@@ -13,7 +13,7 @@ function Navbar() {
         <header className="flex justify-center bg-[#f8f2e9] shadow-md mb-10">
             <div className="md:w-2/3 w-11/12 mx-auto flex justify-between items-center p-2">
                 <NavLink to="/">
-                  Logo
+                    Logo
                 </NavLink>
                 <div className="ml-auto sm:ml-0 flex items-center text-black">
                     <div className="sm:hidden">
@@ -33,7 +33,7 @@ function Navbar() {
                             <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/statistics' ? 'text-[#ff5277]' : ''}`}>Statistics</NavLink>
                             <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/books' ? 'text-[#ff5277]' : ''}`}>Find Books</NavLink>
                         </div>
-                        
+
                     </div>
                 </div>
                 <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/profile' ? 'text-[#ff5277]' : ''}`}>Profile</NavLink>
@@ -42,4 +42,26 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+function SignedOut() {
+    return (
+        <header>
+            <div className="md:w-2/3 w-11/12 mx-auto flex justify-between items-center p-2">
+                <NavLink to="/">Logo</NavLink>
+                <div className="space-x-2">
+                    <NavLink to="/">About</NavLink>
+                    <NavLink to="/">Blog</NavLink>
+                </div>
+                <button className="border border-black p-2 rounded-md">
+                    <NavLink to="/login">Log in</NavLink>
+                </button>
+            </div>
+        </header>
+    )
+}
+
+function Navbar() {
+    const isLoggedIn = false
+    return isLoggedIn ? <SignedIn /> : <SignedOut />
+}
+
+export default Navbar

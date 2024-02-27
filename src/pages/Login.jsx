@@ -21,7 +21,7 @@ function Login() {
                         className="mb-4 border border-black rounded-md p-2" />
                     <button className="border border-black rounded-md w-1/2 mx-auto bg-white">Login</button>
                     <p className="text-center mt-6 text-sm">No account?
-                        <a href="/" className="text-blue-500"> Create one</a>
+                        <a href="/signup" className="text-blue-500"> Create one</a>
                     </p>
                 </div>
             </div>
