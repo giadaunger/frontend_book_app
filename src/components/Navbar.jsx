@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SignedInNav from './SignedInNav';
 import SignedOutNav from './SignedOutNav';
 

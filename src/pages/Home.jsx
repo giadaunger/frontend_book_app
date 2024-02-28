@@ -1,9 +1,10 @@
 import React from 'react'
+import SignedInHome from './SignedInHome'
+import SignedOutHome from './SignedOutHome'
 
 function Home() {
-  return (
-    <div>Home</div>
-  )
+  const isLoggedIn = false
+    return isLoggedIn ? <SignedInHome /> : <SignedOutHome />
 }
 
 export default Home
