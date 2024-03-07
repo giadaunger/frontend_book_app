@@ -7,6 +7,7 @@ import Layout from './pages/Layout';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import Statistics from './pages/Statistics';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/statistics" element={<Statistics />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
