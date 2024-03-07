@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import GoBackBtn from "../components/GoBackBtn";
 import Logo from "../assets/StoryDataLogo.png";
 import useStore from "../store/UserStore";
+import { setCookie } from "../cookies/setCookie";
 
 function Login() {
   const { setUser, user } = useStore();
@@ -12,16 +13,13 @@ function Login() {
 
   async function checkSignIn({ email, password }) {
     async function checkEmail(email) {
-      console.log(email);
       const response = await fetch(
-        `http://127.0.0.1:8000/users/email/${encodeURIComponent(email)}`);
-      console.log("in check email");
+        `http://127.0.0.1:8000/users/email/${encodeURIComponent(email)}`
+      );
       if (!response.ok) {
-          console.log("fail")
         throw new Error("Failed to fetch user data");
       }
       const data = await response.json();
-      console.log(data);
       return data;
     }
 
@@ -32,9 +30,6 @@ function Login() {
         return false;
       }
     }
-    {
-      console.log("inCheckSignIn");
-    }
 
     let success = false;
     const data = await checkEmail(email); // Use await here
@@ -43,7 +38,8 @@ function Login() {
     }
     if (success === true) {
       setUser(data);
-      navigate("/")
+      setCookie("user", data);
+      navigate("/");
     }
   }
 
@@ -52,7 +48,6 @@ function Login() {
       <div className="mb-6">
         <GoBackBtn />
       </div>
-      {console.log (user)}
       <div className="container bg-[#f8f2e9] flex mx-auto rounded-md p-6 shadow-md">
         <div className="flex mx-auto flex-col">
           <img src={Logo} alt="logo" className="w-36 h-36 mx-auto" />

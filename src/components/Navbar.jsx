@@ -1,16 +1,13 @@
 import React from 'react';
 import SignedInNav from './SignedInNav';
 import SignedOutNav from './SignedOutNav';
-import useStore from "../store/UserStore";
+import { useCookies } from 'react-cookie';
 
 function Navbar() {
-    const {user} = useStore()
-    let render = false
-    console.log(user)
-    if (user){
-        render = true
-    }
-    return render ? <SignedInNav /> : <SignedOutNav />
+    const [cookies] = useCookies(['user']);
+    console.log(cookies.user)
+
+    return cookies.user ? <SignedInNav /> : <SignedOutNav />
 }
 
 export default Navbar
