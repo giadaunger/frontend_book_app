@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../assets/StoryDataLogo.png'
 import useStore from "../store/UserStore";
-import { deleteCookie } from "../cookies/deleteCookie";
+import { deleteCookie } from "../cookies";
 
 
 function SignedInNav() {
