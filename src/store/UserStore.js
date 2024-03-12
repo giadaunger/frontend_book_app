@@ -27,4 +27,5 @@ const useStore = create((set) => ({
     setAccessToken: (newToken) => set({ accessToken: newToken }),
 }));
 
+export const accessTokenSelector = (state) => state.accessToken;
 export default useStore;

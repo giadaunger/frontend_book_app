@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import useStore from '../store/ReadingBooks'
+import useStore from '../store/ReadingBooksStore'
 import { useCookies } from 'react-cookie';
-
 
 function ReadingBooks() {
   const [cookies] = useCookies(['user']);
@@ -9,7 +8,7 @@ function ReadingBooks() {
 
   useEffect(() =>{
     console.log(cookies.user)
-    const books = fetchReadingBooks(1)
+    const books = fetchReadingBooks()
     console.log("afetr fetch")
     console.log(readingBooks)
   },[])
