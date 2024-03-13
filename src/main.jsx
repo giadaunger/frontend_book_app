@@ -10,7 +10,6 @@ import SignUp from './pages/SignUp';
 import Statistics from './pages/Statistics';
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
