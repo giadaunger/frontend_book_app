@@ -27,12 +27,12 @@ const UserStore = create((set) => ({
     }
   },
   setAccessToken: (newToken) => set({ accessToken: newToken }),
-  checkCookie: () => {
-    const [cookies] = useCookies(["user"]);
-    if (cookies.accessToken){
-        set({accessToken: cookies.accessToken})
-    }
-  },
+//   checkCookie: () => {
+//     const [cookies] = useCookies(["user"]);
+//     if (cookies.accessToken){
+//         set({accessToken: cookies.accessToken})
+//     }
+//   },
 }));
 
 export default UserStore;
