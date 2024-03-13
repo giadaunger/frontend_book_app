@@ -5,9 +5,10 @@ import useStore from "../store/UserStore";
 import { useCookies } from 'react-cookie';
 
 function Navbar() {
+  const [cookies] = useCookies(['accessToken']);
   const {accessToken } = useStore();
     
-  return accessToken ? <SignedInNav /> : <SignedOutNav />
+  return cookies.accessToken ? <SignedInNav /> : <SignedOutNav />
 }
 
 export default Navbar
