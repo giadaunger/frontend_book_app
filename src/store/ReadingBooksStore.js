@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import UserStore from "./UserStore"
+import { Cookies, useCookies } from "react-cookie";
+import { getCookie } from "../cookies/cookies";
 
 const useStore = create((set) => ({
   readingBooks: false,
   fetchReadingBooks: async () => {
     try {
-      const accessToken = UserStore.getState().accessToken
+      const accessToken = getCookie("accessToken")
       console.log("in fetch reading books");
       console.log("token ", accessToken.access_token)
       const response = await fetch(`http://127.0.0.1:8000/users/reading`, {
