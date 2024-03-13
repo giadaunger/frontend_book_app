@@ -18,8 +18,7 @@ function ReadingBooks() {
       {console.log(readingBooks)}
       { readingBooks &&
       readingBooks.map((book)=> {
-        <div>{book.book.title}</div>
-        {console.log(book.book.title)}
+        return <div>{book.book.title}</div>
       })}
     </div>
   )
