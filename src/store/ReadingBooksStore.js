@@ -6,9 +6,9 @@ const useStore = create((set) => ({
   readingBooks: false,
   fetchReadingBooks: async () => {
     try {
-      const accessToken = getCookie("accessToken")
+      const accessToken = getCookie("accessToken");
       console.log("in fetch reading books");
-      console.log("token ", accessToken.access_token)
+      console.log("token ", accessToken.access_token);
       const response = await fetch(`http://127.0.0.1:8000/users/reading`, {
         method: "GET",
         headers: new Headers({
@@ -16,7 +16,6 @@ const useStore = create((set) => ({
         }),
       });
       if (!response.ok) {
-        console.log("Fail");
         throw new Error("Failed to fetch books");
       }
       const usersReadingBooks = await response.json();
@@ -27,7 +26,21 @@ const useStore = create((set) => ({
   },
   setReadingBooks: (usersReadingBooks) =>
     set({ readingBooks: usersReadingBooks }),
+  fetchCategories: async () => {
+    try {
+      const accessToken = getCookie("accessToken");
+      console.log("in fetch reading books");
+      console.log("token ", accessToken.access_token);
+      const response = await fetch(`http://127.0.0.1:8000/categories`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories");
+      }
+      const usersReadingBooks = await response.json();
+      set({ readingBooks: usersReadingBooks });
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  },
 }));
-
 
 export default useStore;
