@@ -6,9 +6,9 @@ import { useCookies } from 'react-cookie';
 
 
 function Home() {
-  const [cookies] = useCookies(['accessToken']);
+  const {accessToken } = useStore();
 
-  return cookies.accessToken ? <SignedInHome /> : <SignedOutHome />;
+  return accessToken ? <SignedInHome /> : <SignedOutHome />;
 }
 
 export default Home;

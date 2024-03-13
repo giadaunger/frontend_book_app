@@ -9,15 +9,18 @@ function ReadingBooks() {
   useEffect(() =>{
     console.log(cookies.user)
     const books = fetchReadingBooks()
-    console.log("afetr fetch")
-    console.log(readingBooks)
+    console.log("after fetch")
+    console.log("ReadingBooks", readingBooks)
   },[])
 
   return (
     <div>
-      {/* {readingBooks.map((book)=> {
-        <div>{book}</div>
-      })} */}
+      {console.log(readingBooks)}
+      { readingBooks &&
+      readingBooks.map((book)=> {
+        <div>{book.book.title}</div>
+        {console.log(book.book.title)}
+      })}
     </div>
   )
 }

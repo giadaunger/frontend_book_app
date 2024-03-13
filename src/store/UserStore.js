@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { setCookie } from "../cookies";
 
-const useStore = create((set) => ({
+const UserStore = create((set) => ({
     user: false,
     setUser: (chosenUser) => set({ user: chosenUser }),
     accessToken: false,
@@ -19,6 +19,7 @@ const useStore = create((set) => ({
             }
             const data = await response.json();
             set({ accessToken: data });
+
             setCookie("accessToken",JSON.stringify(data))
         } catch (error) {
             console.error('Error fetching token:', error);
@@ -27,5 +28,4 @@ const useStore = create((set) => ({
     setAccessToken: (newToken) => set({ accessToken: newToken }),
 }));
 
-export const accessTokenSelector = (state) => state.accessToken;
-export default useStore;
+export default UserStore ;
