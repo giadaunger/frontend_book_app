@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
+import ProgressBar from "@ramonak/react-progress-bar";
 import useStore from "../store/ReadingBooksStore";
 import { useCookies } from "react-cookie";
-import bookOutline from "../assets/book_outline.svg";
-import book_filled from "../assets/book_filled.svg";
-
 function ReadingBooks() {
   const { setReadingBooks, readingBooks, fetchReadingBooks } = useStore();
   const [cookies] = useCookies(["user"]);
@@ -14,52 +12,28 @@ function ReadingBooks() {
   }, []);
   return (
     <div className="flex flex-col gap-5">
+      <div className="bg-[#f8f2e9] p-2 rounded-lg shadow-md mx-auto">Currently Reading</div>
       {readingBooks &&
         readingBooks.map((book) => {
           return (
-            <div className="bg-gray-100 min-w-60 min-h-60 border flex p-10 gap-10">
+            <div className="bg-[#f8f2e9] min-w-60 shadow-lg flex p-6 gap-10 rounded-lg">
               <div>
-                <svg
-                  className={`fill-[${book.book.main_category.color_code}] absolute`}
-                  width="100" 
-                  height="150"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    width="60"
-                    height="120"
-                    x="5"
-                    y="5"
-                    rx="10"
-                    ry="10"
-                  />
-                </svg>
-                <svg
-                  className={`fill-[${book.book.main_category.color_code}] absolute stroke-white`}
-                  width="100"  
-                  height="150"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    width="60"
-                    height="120"
-                    x="5"
-                    y="5"
-                    rx="10"
-                    ry="10"
-                    strokeWidth={2}
-                  />
-                </svg>
+                {console.log(Math.floor(book.pages_read/book.book.page_count))}
+                <ProgressBar completed={Math.floor((book.pages_read/book.book.page_count)*100)} height="150px" borderRadius="10px"
+                bgColor={book.book.main_category.color_code} baseBgColor="#d1c7b8" className="w-20 border-white border-4 rounded-xl"/>
               </div>
-              {/* { book &&
-              <ProgressBar book={book}/>
-              } */}
-              <div className="mt-4 ml-10">
+              <div className="">
                 <div>{book.book.title}</div>
                 {console.log(book.book.main_category.color_code)}
-                <div className="pt-2">
+                <div className="">
                   {book.pages_read} / {book.book.page_count} pages
                 </div>
+                <div>
+                  {Math.floor((book.pages_read/book.book.page_count)*100)}% done
+                </div>
+                <button className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md">
+                  update page count
+                </button>                
               </div>
             </div>
           );
