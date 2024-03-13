@@ -3,44 +3,21 @@ import { useNavigate } from "react-router-dom";
 import GoBackBtn from "../components/GoBackBtn";
 import Logo from "../assets/StoryDataLogo.png";
 import useStore from "../store/UserStore";
-import { setCookie } from "../cookies/setCookie";
+import { Cookies, useCookies } from 'react-cookie';
+import { setCookie, getCookie } from "../cookies";
 
 function Login() {
-  const { setUser, user } = useStore();
+  const { setUser, user, fetchToken, setAccessToken, accessToken } = useStore();
+  const [cookies] = useCookies(['accessToken']);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+
   async function checkSignIn({ email, password }) {
-    async function checkEmail(email) {
-      const response = await fetch(
-        `http://127.0.0.1:8000/users/email/${encodeURIComponent(email)}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
-      return data;
-    }
-
-    function checkPassword({ password, data }) {
-      if (data.password === password) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    let success = false;
-    const data = await checkEmail(email); // Use await here
-    if (data) {
-      success = checkPassword({ password, data }); // Pass an object to checkPassword
-    }
-    if (success === true) {
-      setUser(data);
-      setCookie("user", data);
-      navigate("/");
-    }
+    await fetchToken(email=email, password=password)
+    // setUser(data);
+    // navigate("/");
   }
 
   return (
