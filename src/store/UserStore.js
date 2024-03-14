@@ -20,7 +20,9 @@ const UserStore = create((set) => ({
       }
       const data = await response.json();
       set({ accessToken: data });
-      setCookie("accessToken", JSON.stringify(data), 25);
+      if (response)
+        {setCookie("accessToken", JSON.stringify(data), 25)};
+        return true
     } catch (error) {
       console.error("Error fetching token:", error);
     }
