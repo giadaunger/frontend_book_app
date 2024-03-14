@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoBackBtn from "../components/GoBackBtn";
 import Logo from "../assets/StoryDataLogo.png";
 import useStore from "../store/UserStore";
 import { useCookies } from 'react-cookie';
+import { getCookie } from "../cookies";
 
 function Login() {
   const { fetchToken } = useStore();
@@ -11,14 +12,20 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false)
   const navigate = useNavigate();
+
+  useEffect(() =>{
+    setLoggedIn(true)
+  },[ cookies.accessToken])
+
 
   async function checkSignIn(event) {
     event.preventDefault(); // Prevents default form submission
     try {
-      const token = await fetchToken(email, password);
-      if (token) {
-        console.log(token + "token")
+      await fetchToken(email, password);
+      if (loggedIn) {
+        console.log(cookies.accessToken)
         navigate("/");
       } else {
         setError("Authorization failed. Invalid credentials.");
