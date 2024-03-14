@@ -24,7 +24,30 @@ const useStore = create((set) => ({
   },
   setReadingBooks: (usersReadingBooks) =>
     set({ readingBooks: usersReadingBooks }),
+
+  fetchUpdatePages: async (book_id, pages) => {
+    try {
+      console.log(book_id)
+
+      const accessToken = getCookie("accessToken")
+      const response = await fetch(`http://127.0.0.1:8000/users/reading/pages/${book_id}/${pages}`, {
+        method: "PUT",
+        headers: new Headers({
+          Authorization: `Bearer ${accessToken.access_token}`, // Correctly format the Authorization header
+        }),
+      });
+      if (!response.ok) {;
+        throw new Error("Failed to update pages");
+      }
+      else{
+        return true
+      }
+    } catch (error) {
+      console.error("Error udpating pages:", error);
+    }
+  }
 }));
+
 
 
 export default useStore;

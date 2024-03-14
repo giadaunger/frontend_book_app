@@ -4,14 +4,18 @@ import useStore from "../store/ReadingBooksStore";
 import { useCookies } from "react-cookie";
 import { NavLink } from "react-router-dom";
 function ReadingBooks() {
-  const { setReadingBooks, readingBooks, fetchReadingBooks } = useStore();
+  const { setReadingBooks, readingBooks, fetchReadingBooks, fetchUpdatePages } =
+    useStore();
   const [cookies] = useCookies(["user"]);
   const [pageModal, setPageModal] = useState(false);
   const [bookPage, setBookPage] = useState(0);
+  const [currentBook, setCurrentBook] = useState(null)
   const ref = useRef(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const books = fetchReadingBooks();
+    console.log(readingBooks)
   }, []);
 
   useEffect(() => {
@@ -21,12 +25,32 @@ function ReadingBooks() {
       }
     };
 
+    
+    
     window.addEventListener("mousedown", handleOutSideClick);
-
+    
     return () => {
       window.removeEventListener("mousedown", handleOutSideClick);
     };
   }, [ref]);
+
+  
+  async function checkPagesUpdate(event, bookId, bookPage) {
+    event.preventDefault(); // Prevents default form submission
+    try {
+      const response = await fetchUpdatePages(bookId, bookPage);
+      if (response!=null) {;
+        fetchReadingBooks()
+        setPageModal(false)
+      } else {
+        setError("Update failed, check internet connection and try again");
+      }
+    } catch (error) {
+      console.error("Error during update:", error);
+      setError("Error during update. Please try again later.");
+    }
+  }
+
 
   return (
     <div className="flex flex-col gap-5">
@@ -59,7 +83,7 @@ function ReadingBooks() {
                 Close
               </button>
               <button
-                onClick={() => {}}
+                onClick={(e) => {checkPagesUpdate(e, currentBook.book_id, bookPage)}}
                 className="bg-blue-500 shadow-md text-white py-2 mx-auto px-4 rounded-lg"
               >
                 Update
@@ -115,7 +139,7 @@ function ReadingBooks() {
               {readingBooks.slice(0, 3).map((book) => {
                 return (
                   <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
-                    <div> 
+                    <div>
                       <ProgressBar
                         completed={Math.floor(
                           (book.pages_read / book.book.page_count) * 100
@@ -140,7 +164,7 @@ function ReadingBooks() {
                       </div>
                       <button
                         onClick={() => {
-                          setBookPage(book.pages_read), setPageModal(true);
+                          setBookPage(book.pages_read), setPageModal(true), setCurrentBook(book);
                         }}
                         className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md"
                       >
