@@ -1,23 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoBackBtn from "../components/GoBackBtn";
 import Logo from "../assets/StoryDataLogo.png";
 import useStore from "../store/UserStore";
-import { Cookies, useCookies } from 'react-cookie';
-import { setCookie, getCookie } from "../cookies";
+import { useCookies } from 'react-cookie';
+import { getCookie } from "../cookies";
 
 function Login() {
-  const { setUser, user, fetchToken, setAccessToken, accessToken } = useStore();
+  const { fetchToken } = useStore();
   const [cookies] = useCookies(['accessToken']);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false)
   const navigate = useNavigate();
 
+  useEffect(() =>{
+    setLoggedIn(true)
+  },[ cookies.accessToken])
 
-  async function checkSignIn({ email, password }) {
-    await fetchToken(email=email, password=password)
-    // setUser(data);
-    // navigate("/");
+
+  async function checkSignIn(event) {
+    event.preventDefault(); // Prevents default form submission
+    try {
+      await fetchToken(email, password);
+      if (loggedIn) {
+        console.log(cookies.accessToken)
+        navigate("/");
+      } else {
+        setError("Authorization failed. Invalid credentials.");
+      }
+    } catch (error) {
+      console.error("Error during sign-in:", error);
+      setError("Error during sign-in. Please try again later.");
+    }
   }
 
   return (
@@ -26,38 +42,41 @@ function Login() {
         <GoBackBtn />
       </div>
       <div className="container bg-[#f8f2e9] flex mx-auto rounded-md p-6 shadow-md">
-        <div className="flex mx-auto flex-col">
-          <img src={Logo} alt="logo" className="w-36 h-36 mx-auto" />
-          <label htmlFor="email">Email:</label>
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="Enter your email"
-            className="mb-4 border border-black rounded-md p-2"
-          />
-          <label htmlFor="password">Password:</label>
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Enter your password"
-            className="mb-4 border border-black rounded-md p-2"
-          />
-          <button
-            onClick={() => checkSignIn({ email, password })}
-            className="border border-black rounded-md w-1/2 mx-auto bg-white"
-          >
-            Login
-          </button>
-          <p className="text-center mt-6 text-sm">
-            No account?
-            <a href="/signup" className="text-blue-500">
-              {" "}
-              Create one
-            </a>
-          </p>
-        </div>
+        <form onSubmit={checkSignIn} className="mx-auto">
+          <div className="flex mx-auto flex-col">
+            <img src={Logo} alt="logo" className="w-36 h-36 mx-auto" />
+            <label htmlFor="email">Email:</label>
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="Enter your email"
+              className="mb-4 border border-black rounded-md p-2"
+            />
+            <label htmlFor="password">Password:</label>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Enter your password"
+              className="mb-4 border border-black rounded-md p-2"
+            />
+            {error && <p className="text-red-500">{error}</p>}
+            <button
+              type="submit"
+              className="border border-black rounded-md w-1/2 mx-auto bg-white"
+            >
+              Login
+            </button>
+            <p className="text-center mt-6 text-sm">
+              No account?
+              <a href="/signup" className="text-blue-500">
+                {" "}
+                Create one
+              </a>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   );
