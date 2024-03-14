@@ -7,19 +7,17 @@ function ReadingBooks() {
   const { setReadingBooks, readingBooks, fetchReadingBooks } = useStore();
   const [cookies] = useCookies(["user"]);
   const [pageModal, setPageModal] = useState(false);
-  const [bookPage, setBookPage] = useState(0)
+  const [bookPage, setBookPage] = useState(0);
   const ref = useRef(null);
-  
 
   useEffect(() => {
-    console.log(cookies.user);
     const books = fetchReadingBooks();
   }, []);
 
   useEffect(() => {
     const handleOutSideClick = (event) => {
       if (!ref.current?.contains(event.target)) {
-        setPageModal(false)
+        setPageModal(false);
       }
     };
 
@@ -30,19 +28,43 @@ function ReadingBooks() {
     };
   }, [ref]);
 
-
   return (
     <div className="flex flex-col gap-5">
       {/* Page updater */}
       {pageModal && (
-        <div>
+        <div className="fixed">
           <div className="fixed inset-0 overflow-auto bg-gray-800 opacity-50 "></div>
-          <div ref={ref} className="shadow-lg flex gap-4 flex-col fixed p-10 rounded-lg inset-x-0 mx-auto w-80 sm:w-96 mt-[20vh] bg-white">
+          <div
+            ref={ref}
+            className="shadow-lg flex gap-4 flex-col fixed p-10 rounded-lg inset-x-0 mx-auto w-80 sm:w-96 mt-[20vh] bg-white"
+          >
             <div className="flex gap-4 mx-auto">
               <label htmlFor="number">Current page: </label>
-              <input className="w-28" value={bookPage} type="number" />
+              <input
+                className="w-28"
+                value={bookPage}
+                onChange={(e) => {
+                  setBookPage(e.target.value);
+                }}
+                type="number"
+              />
             </div>
-            <button onClick={() => {setPageModal(false)}} className="bg-blue-500 shadow-md text-white py-2 mx-auto px-4 rounded-lg">Close</button>
+            <div className="flex">
+              <button
+                onClick={() => {
+                  setPageModal(false);
+                }}
+                className="bg-blue-500 shadow-md text-white py-2 mx-auto px-4 rounded-lg"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => {}}
+                className="bg-blue-500 shadow-md text-white py-2 mx-auto px-4 rounded-lg"
+              >
+                Update
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -55,9 +77,6 @@ function ReadingBooks() {
             return (
               <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
                 <div>
-                  {console.log(
-                    Math.floor(book.pages_read / book.book.page_count)
-                  )}
                   <ProgressBar
                     completed={Math.floor(
                       (book.pages_read / book.book.page_count) * 100
@@ -71,7 +90,6 @@ function ReadingBooks() {
                 </div>
                 <div className="">
                   <div>{book.book.title}</div>
-                  {console.log(book.book.main_category.color_code)}
                   <div className="">
                     {book.pages_read} / {book.book.page_count} pages
                   </div>
@@ -79,7 +97,12 @@ function ReadingBooks() {
                     {Math.floor((book.pages_read / book.book.page_count) * 100)}
                     % done
                   </div>
-                  <button onClick={() => {setPageModal(true)}} className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md">
+                  <button
+                    onClick={() => {
+                      setPageModal(true);
+                    }}
+                    className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md"
+                  >
                     update page count
                   </button>
                 </div>
@@ -92,10 +115,7 @@ function ReadingBooks() {
               {readingBooks.slice(0, 3).map((book) => {
                 return (
                   <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
-                    <div>
-                      {console.log(
-                        Math.floor(book.pages_read / book.book.page_count)
-                      )}
+                    <div> 
                       <ProgressBar
                         completed={Math.floor(
                           (book.pages_read / book.book.page_count) * 100
@@ -109,7 +129,6 @@ function ReadingBooks() {
                     </div>
                     <div className="">
                       <div>{book.book.title}</div>
-                      {console.log(book.book.main_category.color_code)}
                       <div className="">
                         {book.pages_read} / {book.book.page_count} pages
                       </div>
@@ -119,7 +138,12 @@ function ReadingBooks() {
                         )}
                         % done
                       </div>
-                      <button onClick={() => {setBookPage(book.pages_read), setPageModal(true)}} className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md">
+                      <button
+                        onClick={() => {
+                          setBookPage(book.pages_read), setPageModal(true);
+                        }}
+                        className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md"
+                      >
                         update page count
                       </button>
                     </div>

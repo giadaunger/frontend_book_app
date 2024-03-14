@@ -7,8 +7,6 @@ const useStore = create((set) => ({
   fetchReadingBooks: async () => {
     try {
       const accessToken = getCookie("accessToken")
-      console.log("in fetch reading books");
-      console.log("token ", accessToken.access_token)
       const response = await fetch(`http://127.0.0.1:8000/users/reading`, {
         method: "GET",
         headers: new Headers({
