@@ -10,6 +10,7 @@ function Statistics() {
   const [genreCounts, setGenreCounts] = useState({});
   const [genreColors, setGenreColors] = useState({});
   const [readPerMonth, setReadPerMonth] = useState({});
+  const [finishedPerMonth, setFinishedPerMonth] = useState({});
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   useEffect(() => {
@@ -29,9 +30,12 @@ function Statistics() {
       const counts = {};
       const colors = {};
       const startedReadingMonth = {};
+      const finishedReadingMonth = {};
       readBooks.forEach(book => {
         const genre = book.book.main_category.name;
         const startMonth = new Date(book.start_date).getMonth() + 1;
+        const endMonth = new Date(book.start_date).getMonth() + 1;
+        finishedReadingMonth[endMonth] = (finishedReadingMonth[endMonth] || 0) + 1;
         startedReadingMonth[startMonth] = (startedReadingMonth[startMonth] || 0) + 1;
         counts[genre] = (counts[genre] || 0) + 1;
         colors[genre] = book.book.main_category.color_code;
@@ -39,8 +43,11 @@ function Statistics() {
       setGenreCounts(counts);
       setGenreColors(colors);
       setReadPerMonth(startedReadingMonth);
+      setFinishedPerMonth(finishedReadingMonth);
     }
   }, [readBooks]);
+
+  console.log(finishedPerMonth);
 
   const pieChartGenreData = Object.entries(genreCounts).map(([label, value]) => ({
     id: label,
@@ -55,10 +62,23 @@ function Statistics() {
     return [month, monthValue, genreColor];
   });
 
-  const options = {
+  const columnChartEndDate = months.map((month, index) => {
+    const monthValue = finishedPerMonth[index + 1] || 0; 
+    const genreColor = Object.values(genreColors)[index % Object.values(genreColors).length]; 
+    return [month, monthValue, genreColor];
+  });
+
+  const startDateOptions = {
     legend: { position: "none" },
     bars: 'vertical',
     vAxis: { title: 'Books started' },
+    hAxis: { title: 'Month' }
+  };
+
+  const finishedDateOptions = {
+    legend: { position: "none" },
+    bars: 'vertical',
+    vAxis: { title: 'Books finished' },
     hAxis: { title: 'Month' }
   };
 
@@ -88,7 +108,17 @@ function Statistics() {
           width={'100%'}
           height={'400px'}
           data={[['Month', 'Books started', { role: 'style' }], ...columnChartStartDate]}
-          options={options}
+          options={startDateOptions}
+        />
+      </div>
+      <h3 className="text-xl mb-10 text-center">Books finished each month</h3>
+      <div className="flex justify-start mb-20">
+      <Chart
+          chartType="ColumnChart"
+          width={'100%'}
+          height={'400px'}
+          data={[['Month', 'Books started', { role: 'style' }], ...columnChartEndDate]}
+          options={finishedDateOptions}
         />
       </div>
     </div>
