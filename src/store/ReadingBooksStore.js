@@ -15,8 +15,7 @@ const useStore = create((set) => ({
           Authorization: `Bearer ${accessToken.access_token}`, // Correctly format the Authorization header
         }),
       });
-      if (!response.ok) {
-        console.log("Fail");
+      if (!response.ok) {;
         throw new Error("Failed to fetch books");
       }
       const usersReadingBooks = await response.json();

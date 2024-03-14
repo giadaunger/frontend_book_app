@@ -12,20 +12,14 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false)
   const navigate = useNavigate();
-
-  useEffect(() =>{
-    setLoggedIn(true)
-  },[ cookies.accessToken])
 
 
   async function checkSignIn(event) {
     event.preventDefault(); // Prevents default form submission
     try {
-      await fetchToken(email, password);
-      if (loggedIn) {
-        console.log(cookies.accessToken)
+      const res = await fetchToken(email, password);
+      if (res!=null) {
         navigate("/");
       } else {
         setError("Authorization failed. Invalid credentials.");
