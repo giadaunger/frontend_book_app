@@ -2,45 +2,46 @@ import React, { useEffect, useState } from 'react';
 import useStore from '../store/ReadBooksStore';
 import { useCookies } from 'react-cookie';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { BarChart } from '@mui/x-charts/BarChart';
+import { Chart } from "react-google-charts";
 
 function Statistics() {
   const [cookies] = useCookies(['user']);
-  const { readBooks, fetchReadBooks } = useStore();
+  const { readBooks, fetchReadBooks, setReadBooks } = useStore();
   const [genreCounts, setGenreCounts] = useState({});
   const [genreColors, setGenreColors] = useState({});
-  const [startDate, setStartDate] = useState({});
+  const [readPerMonth, setReadPerMonth] = useState({});
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchReadBooks()
+        const books = await fetchReadBooks();
+        setReadBooks(books);
       } catch (error) {
         console.error("Error fetching books:", error);
       }
     };
     fetchData();
-  }, [fetchReadBooks]);
+  }, []);
 
   useEffect(() => {
     if (readBooks) {
       const counts = {};
       const colors = {};
-      const booksStartDate = {}; 
+      const startedReadingMonth = {};
       readBooks.forEach(book => {
         const genre = book.book.main_category.name;
+        const startMonth = new Date(book.start_date).getMonth() + 1;
+        startedReadingMonth[startMonth] = (startedReadingMonth[startMonth] || 0) + 1;
         counts[genre] = (counts[genre] || 0) + 1;
         colors[genre] = book.book.main_category.color_code;
-        const startMonth = new Date(book.book.start_date).getMonth(); // Extract month from start date
-        booksStartDate[startMonth] = (booksStartDate[startMonth] || 0) + 1; // Increment count for the month
       });
       setGenreCounts(counts);
       setGenreColors(colors);
-      setStartDate(booksStartDate); // Set the updated start date data
+      setReadPerMonth(startedReadingMonth);
     }
   }, [readBooks]);
 
-  // Pie chart data remains the same
   const pieChartGenreData = Object.entries(genreCounts).map(([label, value]) => ({
     id: label,
     value,
@@ -48,13 +49,18 @@ function Statistics() {
     color: genreColors[label],
   }));
 
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const columnChartStartDate = months.map((month, index) => {
+    const monthValue = readPerMonth[index + 1] || 0; 
+    const genreColor = Object.values(genreColors)[index % Object.values(genreColors).length]; 
+    return [month, monthValue, genreColor];
+  });
 
-  // Bar chart data for books started each month
-  const barChartData = months.map((month, index) => ({
-    x: month,
-    y: startDate[index] || 0, // Use count for the month, or default to 0 if no books started
-  }));
+  const options = {
+    legend: { position: "none" },
+    bars: 'vertical',
+    vAxis: { title: 'Books started' },
+    hAxis: { title: 'Month' }
+  };
 
   return (
     <div className="md:w-2/3 w-11/12 mx-auto">
@@ -67,13 +73,22 @@ function Statistics() {
           height={400}
         />
       </div>
-      <h3 className="text-xl mb-10 text-center">Books started each month</h3>
+      <h3 className="text-xl mb-10 text-center">Most read authors this year</h3>
       <div className="flex justify-start mb-20">
-        <BarChart
-          xAxis={[{ scaleType: 'band', data: months }]}
-          series={[{ data: barChartData }]} // Use barChartData for the series data
+        <PieChart
+          series={[{ data: pieChartGenreData }]}
           width={800}
           height={400}
+        />
+      </div>
+      <h3 className="text-xl mb-10 text-center">Books started each month</h3>
+      <div className="flex justify-start mb-20">
+      <Chart
+          chartType="ColumnChart"
+          width={'100%'}
+          height={'400px'}
+          data={[['Month', 'Books started', { role: 'style' }], ...columnChartStartDate]}
+          options={options}
         />
       </div>
     </div>
