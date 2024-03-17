@@ -15,9 +15,9 @@ function ReadingBooks() {
       <div className="bg-[#f8f2e9] p-2 rounded-lg shadow-md mx-auto">Currently Reading</div>
       <div className="container mx-auto flex flex-col md:flex-row gap-4">
         {readingBooks &&
-          readingBooks.map((book) => {
+          readingBooks.map((book, index) => {
             return (
-              <div className="bg-[#f8f2e9] min-w-60 shadow-lg flex p-6 gap-10 rounded-lg">
+              <div key={index} className="bg-[#f8f2e9] min-w-60 shadow-lg flex p-6 gap-10 rounded-lg">
                 <div>
                   {console.log(Math.floor(book.pages_read/book.book.page_count))}
                   <ProgressBar completed={Math.floor((book.pages_read/book.book.page_count)*100)} height="150px" borderRadius="10px"
