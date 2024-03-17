@@ -30,13 +30,10 @@ const CreateUserStore = create((set) => ({
             }
 
             const data = await response.json();
-            console.log("Response Data:", data);
-
             set({ email: data.email });
             set({ password: data.password});
             set({ username: data.username });
             set({ bookGoal: data.bookGoal });
-
             return data; 
         } catch (error) {
             console.error("Error creating user:", error);

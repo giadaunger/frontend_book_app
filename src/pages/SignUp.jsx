@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GoBackBtn from '../components/GoBackBtn';
 import Logo from '../assets/StoryDataLogo.png';
 import CreateUserStore from '../store/CreateUserStore';
+import { generateSlug } from "random-word-slugs";
 
 function SignUp() {
     const { email, setEmail, password, setPassword, username, setUsername, bookGoal, setBookGal, createUser } = CreateUserStore();
 
     function usernameGenerator() {
-        const generatedUsername = UsernameGenerator("-")
+        const generatedUsername = generateSlug()
         setUsername(generatedUsername)
     }
+
+    useEffect(() => {
+        usernameGenerator();
+    }, []);
 
     const handleSubmit = async (e) => {
         try {
@@ -19,10 +24,7 @@ function SignUp() {
         } catch (error) {
             console.log(error + " Error");
         }
-    };
-
-    console.log(username);
-    
+    };    
 
     return (
         <div className="w-3/4 sm:w-2/4 mx-auto">
