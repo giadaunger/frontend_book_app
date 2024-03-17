@@ -15,11 +15,11 @@ function Login() {
   const navigate = useNavigate();
 
 
-  async function checkSignIn(event) {
+  const checkSignIn = async (event) => {
     event.preventDefault(); // Prevents default form submission
     try {
       const res = await fetchToken(email, password);
-      if (res!=null) {
+      if (res != null) {
         navigate("/");
       } else {
         setError("Authorization failed. Invalid credentials.");
@@ -28,7 +28,7 @@ function Login() {
       console.error("Error during sign-in:", error);
       setError("Error during sign-in. Please try again later.");
     }
-  }
+  };
 
   return (
     <div className="w-3/4 sm:w-2/4 mx-auto">

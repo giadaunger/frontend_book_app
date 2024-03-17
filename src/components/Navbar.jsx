@@ -6,9 +6,9 @@ import { useCookies } from 'react-cookie';
 
 function Navbar() {
   const [cookies] = useCookies(['accessToken']);
-  const {accessToken } = useStore();
-    
-  return cookies.accessToken ? <SignedInNav /> : <SignedOutNav />
+  const { accessToken } = useStore();
+  
+  return cookies.accessToken ? <SignedInNav accessToken={accessToken} /> : <SignedOutNav />;
 }
 
-export default Navbar
+export default Navbar;
