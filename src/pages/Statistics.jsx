@@ -27,6 +27,7 @@ function Statistics() {
     };
     fetchData();
   }, []);
+  
 
   useEffect(() => {
     if (readBooks) {
