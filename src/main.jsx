@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import PrivateRoutes from './components/PrivateRoutes';
 import Contact from './pages/Contact';
+import Statistics from './pages/Statistics';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           {/* Privet Routes */}
           <Route element={<PrivateRoutes />}>
             <Route path="/" element={<Home />}></Route>
+            <Route path="/statistics" element={<Statistics />}></Route>
           </Route>
         </Route>
       </Routes>
