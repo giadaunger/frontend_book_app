@@ -6,10 +6,10 @@ const CreateUserStore = create((set) => ({
     setEmail: (newEmail) => set({ email: newEmail }),
     password: "",
     setPassword: (newPassword) => set({ password: newPassword }),
-    username: "",
-    setUsername: (newUsername) => set({ username: newUsername}),
-    bookGoal: 1,
-    setBookGoal: (newBookGoal) => set({ bookGoal: newBookGoal}),
+    user_name: "",
+    setUsername: (newUsername) => set({ user_name: newUsername}),
+    book_goal: 1,
+    setBookGoal: (newBookGoal) => set({ book_goal: newBookGoal}),
     createUser: async (userData) => {
         try {
             console.log("Request Payload:", userData);
@@ -32,9 +32,8 @@ const CreateUserStore = create((set) => ({
             const data = await response.json();
             set({ email: data.email });
             set({ password: data.password});
-            set({ username: data.username });
-            set({ bookGoal: data.bookGoal });
-            return data; 
+            set({ user_name: data.user_name });
+            set({ book_goal: data.book_goal });
         } catch (error) {
             console.error("Error creating user:", error);
             throw error;

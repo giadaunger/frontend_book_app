@@ -5,7 +5,7 @@ import CreateUserStore from '../store/CreateUserStore';
 import { generateSlug } from "random-word-slugs";
 
 function SignUp() {
-    const { email, setEmail, password, setPassword, username, setUsername, bookGoal, setBookGal, createUser } = CreateUserStore();
+    const { email, setEmail, password, setPassword, user_name, setUsername, book_goal, setBookGal, createUser } = CreateUserStore();
 
     function usernameGenerator() {
         const generatedUsername = generateSlug()
@@ -20,7 +20,7 @@ function SignUp() {
         try {
             e.preventDefault();
             usernameGenerator()
-            await createUser({ email, password, username, bookGoal });
+            await createUser({ email, password, user_name, book_goal });
         } catch (error) {
             console.log(error + " Error");
         }
