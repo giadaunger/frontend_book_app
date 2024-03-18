@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import PrivateRoutes from './components/PrivateRoutes';
+import Contact from './pages/Contact';
 import Statistics from './pages/Statistics';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
           {/* Privet Routes */}
           <Route element={<PrivateRoutes />}>
             <Route path="/" element={<Home />}></Route>
