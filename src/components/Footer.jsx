@@ -13,7 +13,7 @@ function Footer() {
                         className="w-24 h-24" />
                 </Link>
                 <div className="ml-auto sm:space-x-4 flex flex-col sm:flex-row">
-                    <Link>Profile</Link>
+                    <Link to="/contact">Contact</Link>
                     <Link>About</Link>
                     <Link>Blog</Link>
                 </div>
