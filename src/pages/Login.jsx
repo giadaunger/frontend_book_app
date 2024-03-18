@@ -16,7 +16,7 @@ function Login() {
 
 
   const checkSignIn = async (event) => {
-    event.preventDefault(); // Prevents default form submission
+    event.preventDefault(); 
     try {
       const res = await fetchToken(email, password);
       if (res != null) {

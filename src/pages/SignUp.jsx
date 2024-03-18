@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import GoBackBtn from '../components/GoBackBtn';
 import Logo from '../assets/StoryDataLogo.png';
-import CreateUserStore from '../store/CreateUserStore';
+import createUserStore from '../store/CreateUserStore';
+import useStore from "../store/UserStore";
 import { generateSlug } from "random-word-slugs";
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
-    const { email, setEmail, password, setPassword, user_name, setUsername, book_goal, setBookGal, createUser } = CreateUserStore();
+    const { email, setEmail, password, setPassword, user_name, setUsername, book_goal, setBookGal, createUser } = createUserStore();
+    const { fetchToken } = useStore();
+    const navigate = useNavigate();
 
     function usernameGenerator() {
         const generatedUsername = generateSlug()
@@ -20,11 +24,19 @@ function SignUp() {
         try {
             e.preventDefault();
             usernameGenerator()
-            await createUser({ email, password, user_name, book_goal });
+            const newUser = await createUser({ email, password, user_name, book_goal });
+            if (newUser) {
+                const res = await fetchToken(email, password);
+                if (res != null) {
+                    navigate("/");
+                } else {
+                    console.log("Authorization failed. Invalid credentials.");
+                }
+            }
         } catch (error) {
             console.log(error + " Error");
         }
-    };    
+    };
 
     return (
         <div className="w-3/4 sm:w-2/4 mx-auto">
