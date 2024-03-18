@@ -15,6 +15,7 @@ function SignedOutNav() {
                 <div className="space-x-2">
                     <NavLink to="/">About</NavLink>
                     <NavLink to="/">Blog</NavLink>
+                    <NavLink to="/">Contact</NavLink>
                 </div>
                 <button className="border border-black rounded-md flex p-2">
                     <NavLink to="/login">
