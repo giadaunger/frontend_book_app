@@ -40,16 +40,15 @@ function Statistics() {
       const colors = {};
 
       readBooks.forEach(book => {
-        const author = book.book.author;
-        console.log(book.book.author)
-        const genre = book.book.main_category.name;
+        const author = book.book_version.authors;
+        const genre = book.book_version.book.main_category.name;
         const startDate = new Date(book.start_date);
         counts[genre] = (counts[genre] || 0) + 1;
-        colors[genre] = book.book.main_category.color_code;
+        colors[genre] = book.book_version.book.main_category.color_code;
         authorCounts[author] = (authorCounts[author] || 0) + 1;
         if (startDate >= firstDayOfTheYear && startDate <= lastDayOfTheYear) {
           counts[genre] = (counts[genre] || 0) + 1;
-          colors[genre] = book.book.main_category.color_code;
+          colors[genre] = book.book_version.book.main_category.color_code;
         }
 
       });
@@ -58,7 +57,7 @@ function Statistics() {
       const sortedGenres = Object.entries(counts).sort((a, b) => b[1] - a[1]);
       setMostReadGenresThisYear(sortedGenres); 
       // Authors
-      setAuthors(author)
+      setAuthors(authors)
 
     }
   }, [readBooks]);
