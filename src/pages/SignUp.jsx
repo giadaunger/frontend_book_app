@@ -28,7 +28,11 @@ function SignUp() {
 
         if (newPassword.length < 5) {
             setPasswordError("Password too short, minimum of 5 characters");
-        } else {
+        } 
+        else if (newPassword.length > 100) {
+            setPasswordError("Password too long, maximum of 100 characters")
+        }
+        else {
             setPasswordError("");
         }
     };
