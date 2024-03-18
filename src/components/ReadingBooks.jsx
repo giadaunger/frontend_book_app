@@ -54,6 +54,7 @@ function ReadingBooks() {
           readingBooks.map((book) => {
             return (
               <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
+
                 <div>
                   {console.log(
                     Math.floor(book.pages_read / book.book.page_count)
