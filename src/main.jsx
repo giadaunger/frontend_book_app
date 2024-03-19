@@ -10,6 +10,7 @@ import SignUp from './pages/SignUp';
 import PrivateRoutes from './components/PrivateRoutes';
 import Contact from './pages/Contact';
 import Statistics from './pages/Statistics';
+import Dashboard from './pages/Dashboard';
 
 function App() {
 
@@ -18,12 +19,13 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           {/* Public Routes */}
+          <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           {/* Privet Routes */}
           <Route element={<PrivateRoutes />}>
-            <Route path="/" element={<Home />}></Route>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/statistics" element={<Statistics />}></Route>
           </Route>
         </Route>
