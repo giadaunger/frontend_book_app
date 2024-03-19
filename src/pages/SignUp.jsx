@@ -7,7 +7,7 @@ import { generateSlug } from "random-word-slugs";
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
-    const { email, setEmail, password, setPassword, user_name, setUsername, book_goal, setBookGal, createUser } = createUserStore();
+    const { email, setEmail, password, setPassword, user_name, setUsername, createUser } = createUserStore();
     const { fetchToken } = useStore();
     const navigate = useNavigate();
     const [error, setError] = useState("");
@@ -41,11 +41,11 @@ function SignUp() {
         try {
             e.preventDefault();
             usernameGenerator();
-            const newUser = await createUser({ email, password, user_name, book_goal });
+            const newUser = await createUser({ email, password, user_name });
             if (newUser) {
                 const res = await fetchToken(email, password);
                 if (res != null) {
-                    navigate("/");
+                    navigate("/dashboard");
                 } else {
                     console.log("Authorization failed. Invalid credentials.");
                 }
