@@ -6,7 +6,7 @@ function Profile() {
     const { user, setUser, fetchUser } = GetUserStore();
     const [cookies] = useCookies(["user"]);
     const [editMode, setEditMode] = useState(false);
-    const [editedUser, setEditedUser] = useState(null); 
+    const [editedUser, setEditedUser] = useState(null);
     const [bookGoalErrMsg, setBookGoalErrMsg] = useState("")
     const [usernameErrMsg, setUsernameErrMsg] = useState("")
     const [gmailErrMsg, setGmailErrMsg] = useState("")
@@ -23,23 +23,51 @@ function Profile() {
     }, [user]);
 
     const handleEditClick = () => {
-        setEditMode(true); 
+        setEditMode(true);
     };
 
     const handleCancelClick = () => {
-        setEditMode(false); 
+        setEditMode(false);
         setEditedUser({ ...user });
+        setUsernameErrMsg("")
     };
 
     const handleSaveClick = () => {
-        setEditMode(false); 
+        setEditMode(false);
     };
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        if (name === "user_name") {
+            if (value.length < 5 || value.length > 320) {
+                setUsernameErrMsg("Username must be between 5 and 320 characters.");
+            } else {
+                setUsernameErrMsg("");
+            }
+        } else if (name === "email") {
+            if (!validateEmail(value)) {
+                setGmailErrMsg("Invalid email address.");
+            } else {
+                setGmailErrMsg("");
+            }
+        } else if (name == "book_goal") {
+            if (value < 0 || value > 5000) {
+                setBookGoalErrMsg("A bok goal has to be between 0 and 5000 books / year")
+            } else {
+                setBookGoalErrMsg("")
+            }
+        }
+
         setEditedUser({
             ...editedUser,
-            [e.target.name]: e.target.value,
+            [name]: value,
         });
+    };
+
+    const validateEmail = (email) => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
     };
 
     return (
@@ -48,7 +76,7 @@ function Profile() {
                 <div>
                     {editMode ? (
                         <form>
-                            <div className="flex flex-col lg:flex-row lg:space-x-2 text-xl mx-auto mb-5"> {/* Use flex-col for smaller screens and flex-row for larger screens */}
+                            <div className="flex flex-col lg:flex-row lg:space-x-2 text-xl mx-auto mb-5">
                                 <label>Username</label>
                                 <input
                                     type="text"
@@ -57,7 +85,8 @@ function Profile() {
                                     onChange={handleChange}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
-                            <div className="flex flex-col lg:flex-row lg:space-x-2 text-xl mx-auto mb-5"> {/* Use flex-col for smaller screens and flex-row for larger screens */}
+                            {usernameErrMsg && <p className="text-red-500 text-center mb-5">{usernameErrMsg}</p>}
+                            <div className="flex flex-col lg:flex-row lg:space-x-2 text-xl mx-auto mb-5">
                                 <label>Email</label>
                                 <input
                                     type="email"
@@ -66,7 +95,8 @@ function Profile() {
                                     onChange={handleChange}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
-                            <div className="flex flex-col lg:flex-row lg:space-x-2 text-xl mx-auto mb-5"> {/* Use flex-col for smaller screens and flex-row for larger screens */}
+                            {gmailErrMsg && <p className="text-red-500 text-center mb-5">{gmailErrMsg}</p>}
+                            <div className="flex flex-col lg:flex-row lg:space-x-2 text-xl mx-auto mb-5">
                                 <label>Book goal</label>
                                 <input
                                     type="number"
@@ -77,6 +107,7 @@ function Profile() {
                                     onChange={handleChange}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
+                            {bookGoalErrMsg && <p className="text-red-500 text-center mb-5">{bookGoalErrMsg}</p>}
                             <div className="flex justify-center mx-auto space-x-5 text-center mt-16">
                                 <button
                                     onClick={handleSaveClick}
