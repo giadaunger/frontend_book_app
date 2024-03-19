@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { getCookie, setCookie } from "../cookies";
 import { useCookies } from 'react-cookie';
 
-const UserStore = create((set) => ({
+const GetUserStore = create((set) => ({
     user: false,
     setUser: (chosenUser) => set({ user: chosenUser }),
     fetchUser: async () => {
@@ -29,4 +29,4 @@ const UserStore = create((set) => ({
     },
 }));
 
-export default UserStore;
+export default GetUserStore;
