@@ -11,6 +11,7 @@ import PrivateRoutes from './components/PrivateRoutes';
 import Contact from './pages/Contact';
 import Statistics from './pages/Statistics';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/statistics" element={<Statistics />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
           </Route>
         </Route>
       </Routes>
