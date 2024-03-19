@@ -20,7 +20,7 @@ function Login() {
     try {
       const res = await fetchToken(email, password);
       if (res != null) {
-        navigate("/");
+        navigate("/dashboard");
       } else {
         setError("Authorization failed. Invalid credentials.");
       }

@@ -141,25 +141,29 @@ function ReadingBooks() {
                 return (
                   <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
                     <div>
+                      {console.log(
+                        Math.floor(book.pages_read / book.book_version.page_count)
+                      )}
                       <ProgressBar
                         completed={Math.floor(
-                          (book.pages_read / book.book.page_count) * 100
+                          (book.pages_read / book.book_version.page_count) * 100
                         )}
                         height="150px"
                         borderRadius="10px"
-                        bgColor={book.book.main_category.color_code}
+                        bgColor={book.book_version.book.main_category.color_code}
                         baseBgColor="#d1c7b8"
                         className="w-20 border-white border-4 rounded-xl"
                       />
                     </div>
                     <div className="">
-                      <div>{book.book.title}</div>
+                      <div>{book.book_version.book.title}</div>
+                      {console.log(book.book_version.book.main_category.color_code)}
                       <div className="">
-                        {book.pages_read} / {book.book.page_count} pages
+                        {book.pages_read} / {book.book_version.page_count} pages
                       </div>
                       <div>
                         {Math.floor(
-                          (book.pages_read / book.book.page_count) * 100
+                          (book.pages_read / book.book_version.page_count) * 100
                         )}
                         % done
                       </div>

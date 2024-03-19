@@ -1,7 +1,7 @@
 import React from 'react'
 import ReadingBooks from '../components/ReadingBooks'
 
-function SignedInHome() {
+function Dashboard() {
   return (
     <div className="">
       <div className='bg-green'>
@@ -11,4 +11,4 @@ function SignedInHome() {
   )
 }
 
-export default SignedInHome
+export default Dashboard
