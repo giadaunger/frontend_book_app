@@ -36,7 +36,7 @@ function Profile() {
         setEditMode(false);
     };
 
-    const handleChange = (e) => {
+    const handleUpdateUser = (e) => {
         const { name, value } = e.target;
 
         if (name === "user_name") {
@@ -71,7 +71,7 @@ function Profile() {
     };
 
     return (
-        <div className="w-3/4 sm:w-2/4 mx-auto bg-[#f8f2e9] p-4">
+        <div className="w-3/4 sm:w-2/4 mx-auto bg-[#f8f2e9] p-4 rounded-md shadow-md">
             {user && (
                 <div>
                     {editMode ? (
@@ -82,7 +82,7 @@ function Profile() {
                                     type="text"
                                     name="user_name"
                                     value={editedUser.user_name}
-                                    onChange={handleChange}
+                                    onChange={handleUpdateUser}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
                             {usernameErrMsg && <p className="text-red-500 text-center mb-5">{usernameErrMsg}</p>}
@@ -92,7 +92,7 @@ function Profile() {
                                     type="email"
                                     name="email"
                                     value={editedUser.email}
-                                    onChange={handleChange}
+                                    onChange={handleUpdateUser}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
                             {gmailErrMsg && <p className="text-red-500 text-center mb-5">{gmailErrMsg}</p>}
@@ -104,7 +104,7 @@ function Profile() {
                                     max="5000"
                                     min="0"
                                     value={editedUser.book_goal}
-                                    onChange={handleChange}
+                                    onChange={handleUpdateUser}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
                             {bookGoalErrMsg && <p className="text-red-500 text-center mb-5">{bookGoalErrMsg}</p>}
