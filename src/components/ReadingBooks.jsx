@@ -2,20 +2,21 @@ import React, { useEffect, useState, useRef } from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
 import useStore from "../store/ReadingBooksStore";
 import { useCookies } from "react-cookie";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import ReadingBook from "./ReadingBook";
+
 function ReadingBooks() {
-  const { setReadingBooks, readingBooks, fetchReadingBooks, fetchUpdatePages } =
-    useStore();
+  const { readingBooks, fetchReadingBooks, fetchUpdatePages } = useStore();
   const [cookies] = useCookies(["user"]);
   const [pageModal, setPageModal] = useState(false);
   const [bookPage, setBookPage] = useState(0);
-  const [currentBook, setCurrentBook] = useState(null)
+  const [currentBook, setCurrentBook] = useState(null);
   const ref = useRef(null);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const books = fetchReadingBooks();
-    console.log(readingBooks)
   }, []);
 
   useEffect(() => {
@@ -25,23 +26,20 @@ function ReadingBooks() {
       }
     };
 
-    
-    
     window.addEventListener("mousedown", handleOutSideClick);
-    
+
     return () => {
       window.removeEventListener("mousedown", handleOutSideClick);
     };
   }, [ref]);
 
-  
-  async function checkPagesUpdate(event, bookId, bookPage) {
+  async function checkPagesUpdate(event, bookVersionId, bookPage) {
     event.preventDefault(); // Prevents default form submission
     try {
-      const response = await fetchUpdatePages(bookId, bookPage);
-      if (response!=null) {;
-        fetchReadingBooks()
-        setPageModal(false)
+      const response = await fetchUpdatePages(bookVersionId, bookPage);
+      if (response != null) {
+        fetchReadingBooks();
+        setPageModal(false);
       } else {
         setError("Update failed, check internet connection and try again");
       }
@@ -51,6 +49,19 @@ function ReadingBooks() {
     }
   }
 
+  function goToFindBooks() {
+    navigate("/findbooks");
+  }
+
+  function handleSetPage(e) {
+    if (e.target.value < 0) {
+      setBookPage(0);
+    } else if (e.target.value > currentBook.book_version.page_count) {
+      setBookPage(currentBook.book_version.page_count);
+    } else {
+      setBookPage(e.target.value);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-5">
@@ -68,7 +79,7 @@ function ReadingBooks() {
                 className="w-28"
                 value={bookPage}
                 onChange={(e) => {
-                  setBookPage(e.target.value);
+                  handleSetPage(e);
                 }}
                 type="number"
               />
@@ -83,7 +94,9 @@ function ReadingBooks() {
                 Close
               </button>
               <button
-                onClick={(e) => {checkPagesUpdate(e, currentBook.book_id, bookPage)}}
+                onClick={(e) => {
+                  checkPagesUpdate(e, currentBook.book_version_id, bookPage);
+                }}
                 className="bg-blue-500 shadow-md text-white py-2 mx-auto px-4 rounded-lg"
               >
                 Update
@@ -96,95 +109,32 @@ function ReadingBooks() {
         Currently Reading
       </div>
       <div className="flex flex-col lg:flex-row mx-auto gap-4 min-w-[60vw]">
-        {readingBooks.length < 4 &&
-          readingBooks.map((book) => {
+        {readingBooks &&
+          readingBooks.slice(0, 3).map((book) => {
             return (
-              <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
-
-                <div>
-                  <ProgressBar
-                    completed={Math.floor(
-                      (book.pages_read / book.book.page_count) * 100
-                    )}
-                    height="150px"
-                    borderRadius="10px"
-                    bgColor={book.book.main_category.color_code}
-                    baseBgColor="#d1c7b8"
-                    className="w-20 border-white border-4 rounded-xl"
-                  />
-                </div>
-                <div className="">
-                  <div>{book.book.title}</div>
-                  <div className="">
-                    {book.pages_read} / {book.book.page_count} pages
-                  </div>
-                  <div>
-                    {Math.floor((book.pages_read / book.book.page_count) * 100)}
-                    % done
-                  </div>
-                  <button
-                    onClick={() => {
-                      setPageModal(true);
-                    }}
-                    className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md"
-                  >
-                    update page count
-                  </button>
-                </div>
+              <div>
+                <ReadingBook book={book} setPageModal={(e) => setPageModal(e)} setBookPage={(e) => setBookPage(e)}/>
               </div>
             );
           })}
-        {readingBooks.length > 3 && (
-          <div className="flex flex-col items-center">
-            <div className="flex flex-col lg:flex-row mx-auto gap-4 min-w-[60vw]">
-              {readingBooks.slice(0, 3).map((book) => {
-                return (
-                  <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
-                    <div>
-                      {console.log(
-                        Math.floor(book.pages_read / book.book_version.page_count)
-                      )}
-                      <ProgressBar
-                        completed={Math.floor(
-                          (book.pages_read / book.book_version.page_count) * 100
-                        )}
-                        height="150px"
-                        borderRadius="10px"
-                        bgColor={book.book_version.book.main_category.color_code}
-                        baseBgColor="#d1c7b8"
-                        className="w-20 border-white border-4 rounded-xl"
-                      />
-                    </div>
-                    <div className="">
-                      <div>{book.book_version.book.title}</div>
-                      {console.log(book.book_version.book.main_category.color_code)}
-                      <div className="">
-                        {book.pages_read} / {book.book_version.page_count} pages
-                      </div>
-                      <div>
-                        {Math.floor(
-                          (book.pages_read / book.book_version.page_count) * 100
-                        )}
-                        % done
-                      </div>
-                      <button
-                        onClick={() => {
-                          setBookPage(book.pages_read), setPageModal(true), setCurrentBook(book);
-                        }}
-                        className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md"
-                      >
-                        update page count
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <NavLink>
-              <button className="mt-4 py-1 px-2 rounded-lg bg-[#f8f2e9] shadow-md">
-                See more
-              </button>
-            </NavLink>
+          <div className="flex justify-center">
+            {readingBooks.length > 3 && (
+                <NavLink>
+                  <button className="mt-4 py-1 px-2 rounded-lg bg-[#f8f2e9] shadow-md">
+                    See more
+                  </button>
+                </NavLink>
+              )}
+          </div>
+        {readingBooks.length == 0 && (
+          <div className="flex mx-auto flex-col justify-center items-center bg-[#f8f2e9] p-6 rounded-lg shadow-lg">
+            <div>No books being read!</div>
+            <button
+              onClick={() => goToFindBooks()}
+              className="bg-white py-1 px-2 mt-2 rounded-lg shadow-md"
+            >
+              Add a book to read
+            </button>
           </div>
         )}
       </div>
