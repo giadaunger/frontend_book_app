@@ -127,15 +127,15 @@ function Profile() {
                         </form>
                     ) : (
                         <div className="w-1/2 sm:w-4/5 mx-auto">
-                            <div className="sm:flex sm:space-x-2 text-xl mx-auto mb-5">
+                            <div className="sm:flex sm:space-x-2 text-xl mx-auto mb-5 bg-red-300 p-2 rounded-md">
                                 <h3 className="">Username:</h3>
                                 <p className="">{user.user_name}</p>
                             </div>
-                            <div className="sm:flex sm:space-x-2 text-xl mt-5">
+                            <div className="sm:flex sm:space-x-2 text-xl mt-5 bg-red-300 p-2 rounded-md">
                                 <h3 className="">Email:</h3>
                                 <p>{user.email}</p>
                             </div>
-                            <div className="sm:flex sm:space-x-2 text-xl mt-5">
+                            <div className="sm:flex sm:space-x-2 text-xl mt-5 bg-red-300 p-2 rounded-md">
                                 <h3 className="">Book goal:</h3>
                                 <p>{user.book_goal}</p>
                             </div>
@@ -145,7 +145,9 @@ function Profile() {
                                     className="border border-black rounded p-2 shadow-md transition duration-300 hover:scale-125">
                                     Edit profile
                                 </button>
-                                <button className="border border-black p-2 rounded shadow-md transition duration-300 hover:scale-125">Change password</button>
+                                <a href="/password">
+                                    <button className="border border-black p-2 rounded shadow-md transition duration-300 hover:scale-125">Change password</button>
+                                </a>
                             </div>
                         </div>
                     )}
