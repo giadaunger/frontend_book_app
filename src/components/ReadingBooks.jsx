@@ -108,15 +108,18 @@ function ReadingBooks() {
       <div className="bg-[#f8f2e9] p-2 rounded-lg shadow-md mx-auto">
         Currently Reading
       </div>
-      <div className="flex flex-col lg:flex-row mx-auto gap-4 min-w-[60vw]">
-        {readingBooks &&
-          readingBooks.slice(0, 3).map((book) => {
-            return (
-              <div>
-                <ReadingBook book={book} setPageModal={(e) => setPageModal(e)} setBookPage={(e) => setBookPage(e)}/>
-              </div>
-            );
-          })}
+      <div className="flex flex-col mx-auto gap-4 min-w-[60vw]">
+          {readingBooks &&
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 min-w-[60vw]">
+            {readingBooks.slice(0, 3).map((book) => {
+              return (
+                <div className="">
+                  <ReadingBook book={book} setPageModal={(e) => setPageModal(e)} setBookPage={(e) => setBookPage(e)}/>
+                </div>
+              );
+            })}
+        </div>
+            }
           <div className="flex justify-center">
             {readingBooks.length > 3 && (
                 <NavLink>
