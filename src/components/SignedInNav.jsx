@@ -39,7 +39,7 @@ function SignedInNav() {
                         <div className="flex flex-col sm:flex-row">
                             <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/bookshelf' ? 'text-[#ff5277]' : ''}`}>Bookshelf</NavLink>
                             <NavLink to="/statistics" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/statistics' ? 'text-[#ff5277]' : ''}`}>Statistics</NavLink>
-                            <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/books' ? 'text-[#ff5277]' : ''}`}>Find Books</NavLink>
+                            <NavLink to="/findbooks" className={`mr-5 transition duration-300 hover:scale-110 ${location.pathname === '/books' ? 'text-[#ff5277]' : ''}`}>Find Books</NavLink>
                             <button
                                 onClick={() => deleteCookie(["accessToken"])}
                                 className="transition duration-300 hover:scale-110 border border-black rounded-md p-1" >

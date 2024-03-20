@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Statistics from './pages/Statistics';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import FindBooks from './pages/FindBooks';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/statistics" element={<Statistics />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/findbooks" element={<FindBooks/>}></Route>
           </Route>
         </Route>
       </Routes>

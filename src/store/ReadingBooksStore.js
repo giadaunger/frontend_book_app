@@ -7,8 +7,6 @@ const useStore = create((set) => ({
   fetchReadingBooks: async () => {
     try {
       const accessToken = getCookie("accessToken")
-      console.log("in fetch reading books");
-      console.log("token ", accessToken.access_token)
       const response = await fetch(`http://127.0.0.1:8000/users/reading`, {
         method: "GET",
         headers: new Headers({
@@ -26,7 +24,28 @@ const useStore = create((set) => ({
   },
   setReadingBooks: (usersReadingBooks) =>
     set({ readingBooks: usersReadingBooks }),
+
+  fetchUpdatePages: async (book_version_id, pages) => {
+    try {
+      const accessToken = getCookie("accessToken")
+      const response = await fetch(`http://127.0.0.1:8000/users/reading/pages/${book_version_id}/${pages}`, {
+        method: "PUT",
+        headers: new Headers({
+          Authorization: `Bearer ${accessToken.access_token}`, // Correctly format the Authorization header
+        }),
+      });
+      if (!response.ok) {;
+        throw new Error("Failed to update pages");
+      }
+      else{
+        return true
+      }
+    } catch (error) {
+      console.error("Error udpating pages:", error);
+    }
+  }
 }));
+
 
 
 export default useStore;
