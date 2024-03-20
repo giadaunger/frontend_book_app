@@ -29,16 +29,16 @@ const UpdateUserStore = create((set) => ({
         }
     },
     book_goal: "",
-    setBookGal: (newBookGoal) => set({ book_goal: newBookGoal }),
-    updateBookGoal: async (book, pages) => {
+    setBookGoal: (newBookGoal) => set({ book_goal: newBookGoal }),
+    updateBookGoal: async (book_goal) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/users/reading/pages/${book}/${pages}`, {
+            const response = await fetch(`http://127.0.0.1:8000/user/bookgoal/${book_goal}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${getCookie("accessToken")}`,
                 },
-                body: JSON.stringify(book, pages),
+                body: JSON.stringify(book_goal),
             });
 
             if (!response.ok) {
@@ -46,7 +46,7 @@ const UpdateUserStore = create((set) => ({
             }
 
             const data = await response.json();
-            set({ book_goal: data.pages })
+            set({ book_goal: data.book_goal })
             return data;
         } catch (error) {
             console.error("Error creating user:", error);

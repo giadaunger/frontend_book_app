@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import GetUserStore from '../store/GetUser';
+import UpdateUserStore from '../store/UpdateUser';
 import { useCookies } from 'react-cookie';
 
 function Profile() {
     const { user, setUser, fetchUser } = GetUserStore();
+    const { user_name, setUsername, updateUsername, book_goal, setBookGoal, updateBookGoal, email, setEmail, updateEmail, password, setPassword, updatePassword } = UpdateUserStore()
     const [cookies] = useCookies(["user"]);
     const [editMode, setEditMode] = useState(false);
-    const [editedUser, setEditedUser] = useState(null);
     const [bookGoalErrMsg, setBookGoalErrMsg] = useState("")
     const [usernameErrMsg, setUsernameErrMsg] = useState("")
     const [gmailErrMsg, setGmailErrMsg] = useState("")
@@ -16,59 +17,50 @@ function Profile() {
         setUser(userInfo);
     }, []);
 
-    useEffect(() => {
-        if (user) {
-            setEditedUser({ ...user });
-        }
-    }, [user]);
-
     const handleEditClick = () => {
         setEditMode(true);
+        setUsername(user.user_name);
+        setEmail(user.email);
+        setBookGoal(user.book_goal);
     };
 
     const handleCancelClick = () => {
         setEditMode(false);
-        setEditedUser({ ...user });
         setUsernameErrMsg("")
+        const userInfo = fetchUser();
+        setUser(userInfo);
     };
 
     const handleSaveClick = () => {
         setEditMode(false);
     };
 
-    const handleUpdateUser = (e) => {
-        const { name, value } = e.target;
+    const handleUsernameChange = (e) => {
+        const newUsername = e.target.value;
+        setUsername(newUsername)
 
-        if (name === "user_name") {
-            if (value.length < 5 || value.length > 320) {
-                setUsernameErrMsg("Username must be between 5 and 320 characters.");
-            } else {
-                setUsernameErrMsg("");
-            }
-        } else if (name === "email") {
-            if (!validateEmail(value)) {
-                setGmailErrMsg("Invalid email address.");
-            } else {
-                setGmailErrMsg("");
-            }
-        } else if (name == "book_goal") {
-            if (value < 0 || value > 5000) {
-                setBookGoalErrMsg("A bok goal has to be between 0 and 5000 books / year")
-            } else {
-                setBookGoalErrMsg("")
-            }
+        if (newUsername.length < 5) {
+            setUsernameErrMsg("Password too short, minimum of 5 characters");
         }
+        else if (newUsername.length > 100) {
+            setUsernameErrMsg("Password too long, maximum of 100 characters")
+        }
+        else {
+            setUsernameErrMsg("");
+        }
+    }
 
-        setEditedUser({
-            ...editedUser,
-            [name]: value,
-        });
-    };
+    const handleEmailChange = (e) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail)
+    }
 
-    const validateEmail = (email) => {
-        const re = /\S+@\S+\.\S+/;
-        return re.test(email);
-    };
+
+    const handleBookGoalChange = (e) => {
+        const newBookGoal = e.target.value;
+        setBookGoal(newBookGoal)
+    }
+
 
     return (
         <div className="w-3/4 sm:w-2/4 mx-auto bg-[#f8f2e9] p-4 rounded-md shadow-md">
@@ -81,8 +73,8 @@ function Profile() {
                                 <input
                                     type="text"
                                     name="user_name"
-                                    value={editedUser.user_name}
-                                    onChange={handleUpdateUser}
+                                    value={user_name}
+                                    onChange={handleUsernameChange}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
                             {usernameErrMsg && <p className="text-red-500 text-center mb-5">{usernameErrMsg}</p>}
@@ -91,8 +83,8 @@ function Profile() {
                                 <input
                                     type="email"
                                     name="email"
-                                    value={editedUser.email}
-                                    onChange={handleUpdateUser}
+                                    value={email}
+                                    onChange={handleEmailChange}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
                             {gmailErrMsg && <p className="text-red-500 text-center mb-5">{gmailErrMsg}</p>}
@@ -103,8 +95,8 @@ function Profile() {
                                     name="book_goal"
                                     max="5000"
                                     min="0"
-                                    value={editedUser.book_goal}
-                                    onChange={handleUpdateUser}
+                                    value={book_goal}
+                                    onChange={handleBookGoalChange}
                                     className="sm:p-2 p-1 sm:w-10/12" />
                             </div>
                             {bookGoalErrMsg && <p className="text-red-500 text-center mb-5">{bookGoalErrMsg}</p>}
