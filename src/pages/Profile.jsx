@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import GetUserStore from '../store/GetUser';
 import UpdateUserStore from '../store/UpdateUser';
-import { useCookies } from 'react-cookie';
 
 function Profile() {
     const { user, setUser, fetchUser } = GetUserStore();
-    const { user_name, setUsername, updateUsername, book_goal, setBookGoal, updateBookGoal, email, setEmail, updateEmail, password, setPassword, updatePassword } = UpdateUserStore()
-    const [cookies] = useCookies(["user"]);
+    const { user_name, setUsername, book_goal, setBookGoal, email, setEmail, updateUser } = UpdateUserStore()
     const [editMode, setEditMode] = useState(false);
     const [bookGoalErrMsg, setBookGoalErrMsg] = useState("")
     const [usernameErrMsg, setUsernameErrMsg] = useState("")
@@ -31,9 +29,23 @@ function Profile() {
         setUser(userInfo);
     };
 
-    const handleSaveClick = () => {
+    const handleSaveClick = async (e) => {
+        e.preventDefault();
         setEditMode(false);
+        const updatedUserInfo = {
+            user_name,
+            book_goal,
+            email
+        };
+
+        try {
+            const userInfo = await updateUser(updatedUserInfo);
+            setUser(userInfo);
+        } catch (error) {
+            console.error("Error updating user:", error);
+        }
     };
+
 
     const handleUsernameChange = (e) => {
         const newUsername = e.target.value;
