@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { Cookies, useCookies } from "react-cookie";
 import { getCookie } from "../cookies/cookies";
 
-const useStore = create((set) => ({
+const ReadingBooksStore = create((set) => ({
   readingBooks: false,
   fetchReadingBooks: async () => {
     try {
@@ -48,4 +48,4 @@ const useStore = create((set) => ({
 
 
 
-export default useStore;
+export default ReadingBooksStore;

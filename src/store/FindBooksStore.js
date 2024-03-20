@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { getCookie } from "../cookies";
 
-const useStore = create((set) => ({
+const FindBooksStore = create((set) => ({
   foundBooks: false,
   foundEditions: false,
   fetchBooks: async (searchTerm) => {
@@ -19,20 +19,22 @@ const useStore = create((set) => ({
       console.error("Error fetching books:", error);
     }
   },
-  addToReading: async (book_id) => {
+  addToReading: async (book_version_id) => {
     try {
         
       const accessToken = getCookie("accessToken")
-      const response = await fetch(`http://127.0.0.1:8000/users/reading`, {
+      const response = await fetch(`http://127.0.0.1:8000/users/reading/${book_version_id}`, {
         method: "POST",
         headers: new Headers({
-          Authorization: `Bearer ${accessToken.access_token}`,
-          body: book_id,
+          Authorization: `Bearer ${accessToken.access_token}`
         }),
       });
       if (!response.ok) {
         console.log("Fail");
         throw new Error("Failed to add book");
+      }
+      else{
+        return true
       }
     } catch (error) {
       console.error("Error adding book:", error);
@@ -64,4 +66,4 @@ const useStore = create((set) => ({
 
 
 
-export default useStore;
+export default FindBooksStore;

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import useStore from "../store/FindBooksStore";
+import FindBooksStore from "../store/FindBooksStore";
+import ReadingBooksStore from "../store/ReadingBooksStore";
 
 function SearchBar() {
-  const {fetchBooks} = useStore();
+  const {fetchBooks} = FindBooksStore();
+  const {fetchReadingBooks} = ReadingBooksStore()
   const [searchTerm, setSearchTerm] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [formError, setFormError] = useState('')

@@ -1,5 +1,6 @@
 import ProgressBar from "@ramonak/react-progress-bar";
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 function ReadingBook({ book, setPageModal, setBookPage }) {
   const [percentage, setPercentage] = useState(0);
@@ -24,7 +25,7 @@ function ReadingBook({ book, setPageModal, setBookPage }) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="bg-[#f8f2e9] mx-auto min-w-72 shadow-lg flex p-6 gap-10 rounded-lg">
+      <div className="bg-[#f8f2e9] mx-auto w-11/12 h-full shadow-lg flex p-6 gap-10 rounded-lg">
         <div>
           <ProgressBar
             completed={percentage}
@@ -35,8 +36,8 @@ function ReadingBook({ book, setPageModal, setBookPage }) {
             className="w-20 border-white border-4 rounded-xl"
           />
         </div>
-        <div className="">
-          <div>{book.book_version.title}</div>
+        <div className="overflow-clip">
+          <NavLink to={`/bookpage/${book.book_version.book.id}`} className="w-40">{book.book_version.book.title}</NavLink> 
           <div className="">
             {book.pages_read}/ {book.book_version.page_count} pages
           </div>
