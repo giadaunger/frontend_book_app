@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoBackBtn from "../components/GoBackBtn";
 import Logo from "../assets/StoryDataLogo.png";
 import useStore from "../store/UserStore";
@@ -16,7 +16,7 @@ function Login() {
 
 
   const checkSignIn = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     try {
       const res = await fetchToken(email, password);
       if (res != null) {
@@ -56,12 +56,20 @@ function Login() {
               className="mb-4 border border-black rounded-md p-2"
             />
             {error && <p className="text-red-500">{error}</p>}
-            <button
-              type="submit"
-              className="border border-black rounded-md w-1/2 mx-auto bg-white"
-            >
-              Login
-            </button>
+            <div className="flex justify-between">
+              <button
+                type="submit"
+                className="border border-black rounded-md p-2 w-1/3 bg-white"
+              >
+                Login
+              </button>
+              <Link to="/reset-password">
+                <button
+                  className="border border-black rounded-md p-2 bg-white">
+                  Reset password
+                </button>
+              </Link>
+            </div>
             <p className="text-center mt-6 text-sm">
               No account?
               <a href="/signup" className="text-blue-500">

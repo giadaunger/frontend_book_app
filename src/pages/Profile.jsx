@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GetUserStore from '../store/GetUser';
 import UpdateUserStore from '../store/UpdateUser';
+import { Link } from 'react-router-dom';
 
 function Profile() {
     const { user, setUser, fetchUser } = GetUserStore();
@@ -167,9 +168,9 @@ function Profile() {
                                         className="border border-black rounded p-2 shadow-md transition duration-300 hover:scale-125">
                                         Edit profile
                                     </button>
-                                    <a href="/password">
+                                    <Link to="/update-password">
                                         <button className="border border-black p-2 rounded shadow-md transition duration-300 hover:scale-125">Change password</button>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         )}
