@@ -27,14 +27,14 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/bookpage/:book_id" element={<BookPage/>}></Route>
-          <Route path="/password" element={<Password />}></Route>
+          <Route path="/bookpage/:book_id" element={<BookPage />}></Route>
           {/* Privet Routes */}
           <Route element={<PrivateRoutes />}>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/statistics" element={<Statistics />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/findbooks" element={<FindBooks/>}></Route>
+            <Route path="/findbooks" element={<FindBooks />}></Route>
+            <Route path="/password" element={<Password />}></Route>
           </Route>
         </Route>
       </Routes>
