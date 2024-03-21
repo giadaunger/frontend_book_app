@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import FindBooks from './pages/FindBooks';
 import BookPage from './pages/BookPage';
+import Password from './pages/Password';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/bookpage/:book_id" element={<BookPage/>}></Route>
+          <Route path="/password" element={<Password />}></Route>
           {/* Privet Routes */}
           <Route element={<PrivateRoutes />}>
             <Route path="/dashboard" element={<Dashboard />}></Route>
