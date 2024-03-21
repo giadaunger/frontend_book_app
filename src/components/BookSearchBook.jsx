@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 import ReadingBooksStore from "../store/ReadingBooksStore";
 
 
-function BookSearchBook({ book, handleModal, booksReading}) {
-    const {readingBooks} = ReadingBooksStore()
+function BookSearchBook({ book, handleModal}) {
+    const {readingBooks, booksReadingId} = ReadingBooksStore()
     return (
     <div className="bg-[#f8f2e9] shadow-md justify-center flex flex-col items-center rounded-lg h-full pt-2">
       {book.versions[0] && (
@@ -20,15 +20,16 @@ function BookSearchBook({ book, handleModal, booksReading}) {
           );
         })}
       </div>
-      { booksReading &&
+      { booksReadingId &&
       <div>
-          {!booksReading.includes(book.id) ?
+          {console.log(booksReadingId)}
+          {!booksReadingId.includes(book.id) ?
             <button
             onClick={() => {
-              handleModal(book);
+                handleModal(book);
             }}
             className="text-sm bg-white px-2 py-0.5 rounded-lg mt-1 mb-2 sh-md"
-          >
+            >
             Add to reading
           </button>:
           <div

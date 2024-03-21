@@ -4,6 +4,8 @@ import { getCookie } from "../cookies/cookies";
 
 const ReadingBooksStore = create((set) => ({
   readingBooks: false,
+  booksReading: false,
+  booksReadingId: false,
   fetchReadingBooks: async () => {
     try {
       const accessToken = getCookie("accessToken")
@@ -24,6 +26,17 @@ const ReadingBooksStore = create((set) => ({
   },
   setReadingBooks: (usersReadingBooks) =>
     set({ readingBooks: usersReadingBooks }),
+  setBooksReading: (usersReadingBooks) =>
+    {
+      const tempBook = []
+      const tempBookId = []
+      usersReadingBooks.map((book)=>{
+        tempBook.push(book.book_version.book,
+        tempBookId.push(book.book_version.book.id))
+      })
+      set({ booksReading: tempBook })
+      set({booksReadingId: tempBookIdx})
+    },
 
   fetchUpdatePages: async (book_version_id, pages) => {
     try {

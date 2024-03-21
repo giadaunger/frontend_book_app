@@ -7,12 +7,11 @@ import ReadingBookStore from "../store/ReadingBooksStore";
 function FindBooks() {
   const { foundBooks, fetchPopularEditions, foundEditions, addToReading } =
     FindBooksStore();
-  const { fetchReadingBooks, readingBooks } = ReadingBookStore();
+  const { fetchReadingBooks, readingBooks,booksReading, setBooksReading } = ReadingBookStore();
   const [bookAddModal, setBookAddModal] = useState(false);
   const [addedModal, setAddedModal] = useState(false);
   const [editions, setEditions] = useState([]);
   const ref = useRef(null);
-  const [booksReading, setBooksReading] = useState([]);
 
   useEffect(() => {
     async function fetch(){
@@ -23,13 +22,7 @@ function FindBooks() {
 
   useEffect(()=>{
     if (readingBooks){    
-        const tempBooks = []
-        console.log(readingBooks)
-        readingBooks.map((book)=>{
-            tempBooks.push(book.book_version.book.id)
-        })
-        setBooksReading(tempBooks)
-        console.log(booksReading)
+        setBooksReading(readingBooks)
     }
   },[readingBooks])
 
@@ -171,7 +164,6 @@ function FindBooks() {
                     <BookSearchBook
                       book={book}
                       handleModal={(e) => handleModal(e)}
-                      booksReading={booksReading}
                     />
                   )}
                 </div>
