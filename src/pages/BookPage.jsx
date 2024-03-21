@@ -7,7 +7,8 @@ import EditionsInfo from "../components/EditionsInfo";
 import ReadingBooksStore from "../store/ReadingBooksStore";
 
 function BookPage() {
-  const { fetchReadingBooks, readingBooks } = ReadingBooksStore();
+  const { fetchReadingBooks, readingBooks, booksReadingId, setBooksReading } =
+    ReadingBooksStore();
   const { fetchPopularEditions, foundEditions } = FindBooksStore();
   const { fetchPageBook, pageBook } = BookPageStore();
   const { book_id } = useParams();
@@ -18,10 +19,16 @@ function BookPage() {
   useEffect(() => {
     fetchPageBook(book_id);
     fetchPopularEditions(book_id);
-    if(!readingBooks){
-        fetchReadingBooks()
-    }
+    fetchReadingBooks();
   }, []);
+
+  useEffect(() => {
+    if(!booksReadingId){
+        if(readingBooks){
+        setBooksReading(readingBooks)
+    }}
+  }, [readingBooks]);
+
 
   function handleBookPage() {
     setOnBook(true);
@@ -34,8 +41,6 @@ function BookPage() {
     setBookTabColor("#fcf8f4");
     setEditionTabColor("#f8f2e9");
   }
-
-
 
   return (
     <div className="md:w-2/3 w-11/12 mx-auto">
@@ -53,7 +58,7 @@ function BookPage() {
           Editions
         </button>
       </div>
-      {onBook ? <BookInfo /> : <EditionsInfo />}
+      {onBook ? <BookInfo handleEditionPage={() => handleEditionPage()} /> : <EditionsInfo />}
     </div>
   );
 }

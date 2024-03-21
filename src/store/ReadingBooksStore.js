@@ -6,6 +6,8 @@ const ReadingBooksStore = create((set) => ({
   readingBooks: false,
   booksReading: false,
   booksReadingId: false,
+  pausedBooksReading: false,
+  pausedBooksReadingID: false,
   fetchReadingBooks: async () => {
     try {
       const accessToken = getCookie("accessToken")
@@ -20,6 +22,7 @@ const ReadingBooksStore = create((set) => ({
       }
       const usersReadingBooks = await response.json();
       set({ readingBooks: usersReadingBooks });
+      return true
     } catch (error) {
       console.error("Error fetching books:", error);
     }
@@ -30,12 +33,18 @@ const ReadingBooksStore = create((set) => ({
     {
       const tempBook = []
       const tempBookId = []
+      const pausedTemp = []
       usersReadingBooks.map((book)=>{
+        if( book.paused === false ){
         tempBook.push(book.book_version.book,
-        tempBookId.push(book.book_version.book.id))
+        tempBookId.push(book.book_version.book.id))}
+        else{
+          pausedTemp.push(book.book_version.book)
+        }
       })
       set({ booksReading: tempBook })
-      set({booksReadingId: tempBookIdx})
+      set({booksReadingId: tempBookId})
+      set({pausedBooksReading: pausedTemp})
     },
 
   fetchUpdatePages: async (book_version_id, pages) => {
