@@ -164,7 +164,7 @@ function Profile() {
                                     <h3 className="">Email:</h3>
                                     <p>{user.email}</p>
                                 </div>
-                                <div className="sm:flex sm:space-x-2 text-xl mt-5 bg-[#ccebf5] p-2 rounded-md overflow-scroll border border-[#71bfd9]">
+                                <div className="flex space-x-2 text-xl mt-5 bg-[#ccebf5] p-2 rounded-md overflow-scroll border border-[#71bfd9]">
                                     <h3 className="">Book goal:</h3>
                                     <p>{user.book_goal}</p>
                                 </div>
