@@ -21,12 +21,10 @@ function Statistics() {
   // E-book?
   const [bookTypeCounts, setBookTypeCounts] = useState({});
   const [bookTypeCountsThisYear, setBookTypeCountsThisYear] = useState({});
-
   // When book were started/finished
   const [readPerMonth, setReadPerMonth] = useState({});
   const [finsihedPerMonth, setFinishedPerMonth] = useState({});
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
   // How long it took a user to finish a book
   const [bookReadingDuration, setBookReadDuration] = useState({});
 
@@ -34,14 +32,20 @@ function Statistics() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const books = await fetchReadBooks();
-        setReadBooks(books);
+        const res = await fetchReadBooks();
+        if (res != null) {
+          console.log("Success");
+        } else {
+          console.log("Fail: No books fetched or empty array received");
+        }
       } catch (error) {
         console.error("Error fetching books:", error);
+        console.log("Fail: Error fetching books");
       }
     };
     fetchData();
   }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,13 +78,11 @@ function Statistics() {
       // Variable to store which month books were started
       const startedReadingMonth = {};
       const finishedReadingMonth = {};
-
       // Book duartion
       const readingDuration = {};
 
       readBooks.forEach(book => {
         const author = book.book_version.book.authors.map(author => author.author.name);
-        console.log(author)
         const genre = book.book_version.book.main_category.name;
         const startDate = new Date(book.start_date);
         counts[genre] = (counts[genre] || 0) + 1;
@@ -111,7 +113,6 @@ function Statistics() {
             bookCounts['Regular book']++;
           }
         }
-
         // Books started/ended each month
         const monthIndexStart = startDate.getMonth() + 1;
         startedReadingMonth[monthIndexStart] = (startedReadingMonth[monthIndexStart] || 0) + 1;
@@ -140,16 +141,13 @@ function Statistics() {
       // Book type
       setBookTypeCounts(bookCounts);
       setBookTypeCountsThisYear(bookCounts)
-
       // Books started/ended
       setReadPerMonth(startedReadingMonth);
       setFinishedPerMonth(finishedReadingMonth)
-
       // Book duration
       setBookReadDuration(readingDuration);
     }
   }, [readBooks]);
-
 
   // Genres chart data
   const pieChartGenreData = Object.entries(genreCounts).map(([label, value]) => ({
@@ -157,7 +155,6 @@ function Statistics() {
     value,
     label,
   }));
-
   const pieChartGenreDataThisYear = mostReadGenresThisYear.map(([label, value]) => ({
     id: label,
     value,
@@ -173,7 +170,6 @@ function Statistics() {
       value: parseInt(count),
     };
   });
-
   const pieChartAuthorsDataThisYear = mostReadAuthorsThisYear.map(([author, count]) => {
     return {
       id: author,
@@ -188,13 +184,11 @@ function Statistics() {
     label: type,
     value: count,
   }));
-
   const pieChartBookTypeDataThisYear = Object.entries(bookTypeCountsThisYear).map(([type, count]) => ({
     id: type,
     label: type,
     value: count,
   }));
-
 
   // Books started/ended
   const columnChartStartData = [
@@ -203,20 +197,17 @@ function Statistics() {
       return [months[monthIndexStart - 1], count];
     }),
   ];
-
   const startDateOptions = {
     legend: { position: "none" },
     vAxis: { title: 'Books started' },
     hAxis: { title: 'Month' }
   };
-
   const columnChartFinishedData = [
     ['Month', 'Books finsihed'],
     ...Object.entries(finsihedPerMonth).map(([monthIndexFinished, count]) => {
       return [months[monthIndexFinished - 1], count];
     }),
   ];
-
   const finsihedDateOptions = {
     legend: { position: "none" },
     vAxis: { title: 'Books finished' },
@@ -225,7 +216,6 @@ function Statistics() {
 
   // Book duartion
   const barChartData = Object.entries(bookReadingDuration).map(([bookTitle, durationDays]) => [bookTitle, durationDays]);
-
   return (
     <div className="md:w-2/3 w-11/12 mx-auto">
       <h2 className="text-4xl mb-20 text-center">Statistics</h2>
