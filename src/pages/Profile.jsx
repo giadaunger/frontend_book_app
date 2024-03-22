@@ -98,7 +98,7 @@ function Profile() {
                     </>
                 )}
             </div>
-            <div className="w-3/4 sm:w-2/4 mx-auto bg-[#f8f2e9] p-4 rounded-md shadow-md">
+            <div className="w-3/4 sm:w-2/4 mx-auto bg-[#f8f2e9] p-4 rounded-md shadow-md border">
                 {user && (
                     <div>
                         {editMode ? (
@@ -149,27 +149,28 @@ function Profile() {
                                 </div>
                             </form>
                         ) : (
-                            <div className="w-1/2 sm:w-4/5 mx-auto">
-                                <div className="sm:flex sm:space-x-2 text-xl mx-auto mb-5 bg-red-300 p-2 rounded-md">
+                            <div className=" sm:w-4/5 mx-auto w-full">
+                                <h2 className="text-center text-2xl mb-10 p-2">Edit profile</h2>
+                                <div className="sm:flex sm:space-x-2 text-xl mx-auto mb-5 bg-[#dcf4d8] p-2 rounded-md overflow-scroll border border-[#7ad56a]">
                                     <h3 className="">Username:</h3>
                                     <p className="">{user.user_name}</p>
                                 </div>
-                                <div className="sm:flex sm:space-x-2 text-xl mt-5 bg-red-300 p-2 rounded-md">
+                                <div className="sm:flex sm:space-x-2 text-xl mt-5 bg-[#f5dece] p-2 rounded-md overflow-scroll border border-[#e8a372]">
                                     <h3 className="">Email:</h3>
                                     <p>{user.email}</p>
                                 </div>
-                                <div className="sm:flex sm:space-x-2 text-xl mt-5 bg-red-300 p-2 rounded-md">
+                                <div className="sm:flex sm:space-x-2 text-xl mt-5 bg-[#ccebf5] p-2 rounded-md overflow-scroll border border-[#71bfd9]">
                                     <h3 className="">Book goal:</h3>
                                     <p>{user.book_goal}</p>
                                 </div>
                                 <div className="flex justify-center mx-auto space-x-5 text-center mt-16">
                                     <button
                                         onClick={handleEditClick}
-                                        className="border border-black rounded p-2 shadow-md transition duration-300 hover:scale-125">
+                                        className="border border-black rounded p-2 shadow-md transition duration-300 hover:scale-125 hover:bg-[#bde1ed] hover:border-[#71bfd9]">
                                         Edit profile
                                     </button>
                                     <Link to="/update-password">
-                                        <button className="border border-black p-2 rounded shadow-md transition duration-300 hover:scale-125">Change password</button>
+                                        <button className="border border-black p-2 rounded shadow-md transition duration-300 hover:scale-125 hover:bg-[#f2d2ba] hover:border-[#e8a372]">Change password</button>
                                     </Link>
                                 </div>
                             </div>
