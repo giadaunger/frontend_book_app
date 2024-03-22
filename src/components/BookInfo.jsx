@@ -15,21 +15,37 @@ function BookInfo({ handleEditionPage }) {
     setBooksReading,
     fetchReadingBooks,
   } = ReadingBooksStore();
-  const { putUnpaused } = UpdateBookVersionStore();
+  const { putUnpaused, putPaused } = UpdateBookVersionStore();
   const { book_id } = useParams();
   const [updateModal, setUpdateModal] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (readingBooks) {
-        setBooksReading(readingBooks);
-  }},[readingBooks])
+      setBooksReading(readingBooks);
+    }
+  }, [readingBooks]);
 
-  async function unpause_book() {
+  async function unpauseBook() {
     const shelf = readingBooks.find(
       (el) => el.book_version.book.id == pageBook.id
     );
     console.log("shelf", shelf);
     const response = await putUnpaused(shelf.book_version_id);
+    try {
+      if (response === true) {
+        const res = await fetchReadingBooks();
+      }
+    } catch (error) {
+      console.error("Error during update:", error);
+    }
+  }
+
+  async function pauseBook() {
+    const shelf = readingBooks.find(
+      (el) => el.book_version.book.id == pageBook.id
+    );
+    console.log("shelf", shelf);
+    const response = await putPaused(shelf.book_version_id);
     try {
       if (response === true) {
         const res = await fetchReadingBooks();
@@ -78,12 +94,19 @@ function BookInfo({ handleEditionPage }) {
               })}
             </ul>
             {booksReadingId && (
-              <div> 
-                {(booksReadingId.includes(pageBook.id))? (
+              <div>
+                {booksReadingId.includes(pageBook.id) ? (
                   <div className="flex flex-col justify-center items-center">
                     <div className="border-2 border-[#f2d2ba] px-2 py-1 rounded-full mt-2">
                       Currently Reading
                     </div>
+                    <button
+                      onClick={() => {pauseBook();
+                      }}
+                      className="text-sm bg-white px-2 py-1 rounded-full mt-2 shadow-md"
+                    >
+                      Pause Book
+                    </button>
                     <button
                       onClick={() => handleEditionPage()}
                       className="text-sm bg-white px-2 py-1 rounded-full mt-2 shadow-md"
@@ -99,7 +122,7 @@ function BookInfo({ handleEditionPage }) {
                           Book Paused
                         </div>
                         <button
-                          onClick={() => unpause_book()}
+                          onClick={() => unpauseBook()}
                           className="text-sm bg-white px-2 py-1 rounded-full mt-2 shadow-md"
                         >
                           Unpause book

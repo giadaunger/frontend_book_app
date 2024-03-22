@@ -33,12 +33,16 @@ function ReadingBooks() {
     };
   }, [ref]);
 
+  async function fetch(){
+    fetchReadingBooks()
+  }
+
   async function checkPagesUpdate(event, bookVersionId, bookPage) {
     event.preventDefault(); // Prevents default form submission
     try {
       const response = await fetchUpdatePages(bookVersionId, bookPage);
       if (response != null) {
-        fetchReadingBooks();
+        await fetch();
         setPageModal(false);
       } else {
         setError("Update failed, check internet connection and try again");
@@ -62,7 +66,6 @@ function ReadingBooks() {
       setBookPage(e.target.value);
     }
   }
-
   return (
     <div className="flex flex-col gap-5">
       {/* Page updater */}
@@ -114,7 +117,7 @@ function ReadingBooks() {
             {readingBooks.slice(0, 3).map((book) => {
               return (
                 <div className="">
-                  <ReadingBook book={book} setPageModal={(e) => setPageModal(e)} setBookPage={(e) => setBookPage(e)}/>
+                  <ReadingBook book={book} setPageModal={(e) => setPageModal(e)} setBookPage={(e) => setBookPage(e)} setCurrentBook={(e)=> setCurrentBook(e)}/>
                 </div>
               );
             })}
