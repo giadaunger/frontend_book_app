@@ -1,28 +1,21 @@
 import React, { useState } from "react";
 import GoBackBtn from "../components/GoBackBtn";
 import Logo from "../assets/StoryDataLogo.png";
-import nodemailer from "nodemailer"; 
+import GetUserStore from "../store/GetUser";
 
 function ResetPassword() {
+    const { userWithEmail, setUserWithEmail, fetchUserWithEmail } = GetUserStore()
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
 
     const resetPassword = async (event) => {
-        event.preventDefault(); 
-        const resetLink = `${email}/reset-password?token=${token}`;
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USERNAME,
-                pass: process.env.EMAIL_PASSWORD,
-            },
-        });
-        await transporter.sendMail({
-            from: 'giada.unger02@gmail.com',
-            to: email,
-            subject: 'Reset Your Password',
-            html: `<p>You have requested to reset your password. Click <a href="${resetLink}">here</a> to reset your password.</p>`,
-        });
+        event.preventDefault();
+        const userEmail = fetchUserWithEmail(email)
+        if (userEmail) {
+            console.log(userEmail);
+        } else (error) => {
+            console.log("Error " + error);
+        }
     };
 
     return (
