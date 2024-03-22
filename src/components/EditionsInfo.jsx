@@ -6,7 +6,7 @@ import ReadingBooksStore from "../store/ReadingBooksStore";
 import UpdateBookVersionStore from "../store/UpdateBookVersionStore";
 
 function EditionsInfo() {
-  const { fetchPopularEditions, foundEditions } = FindBooksStore();
+  const { fetchPopularEditions, foundEditions, addToReading } = FindBooksStore();
   const { fetchPageBook, pageBook } = BookPageStore();
   const {
     readingBooks,
@@ -36,7 +36,6 @@ function EditionsInfo() {
   }, [ref]);
 
   async function pauseBook() {
-    console.log(currentVersion);
     const res = await putPaused(currentVersion.id);
     if (res) {
       await fetchReadingBooks();
@@ -54,7 +53,6 @@ function EditionsInfo() {
     const shelf = readingBooks.find(
       (el) => el.book_version.book.id == pageBook.id
     );
-    console.log("shelf", shelf);
     const response = await putUnpaused(shelf.book_version_id);
     try {
       if (response === true) {
@@ -69,7 +67,6 @@ function EditionsInfo() {
     const shelf = readingBooks.find(
         (el) => el.book_version.book.id == pageBook.id
       )
-      console.log(shelf)
       const response = await changeEdition(shelf.book_version_id, currentVersion.id);
       try {
         if (response === true) {
@@ -82,9 +79,18 @@ function EditionsInfo() {
     
   }
 
-  function handleChange(){
-
+  async function addBook(book) {
+    const response = await addToReading(book.id);
+    if (response == true) {
+        async function fetch(){
+            fetchReadingBooks()
+        }
+        fetch();
+      setBookAddModal(false);
+      setAddedModal(true);
+    }
   }
+
 
   return (
     <div>
@@ -126,7 +132,6 @@ function EditionsInfo() {
                     <div>Page Count: {edition.page_count}</div>
                     <div>Publisher: {edition.publisher}</div>
                     <div>Ebook: {edition.is_ebook ? "Yes" : "No"}</div>
-                    <div>id: {edition.id}</div>
                     {booksReadingId && (
                       <>
                         {readingBooks.some((el) => el.book_version.book_id === pageBook.id) ? (
@@ -135,9 +140,6 @@ function EditionsInfo() {
                               (el) => el.book_version_id == edition.id
                             ) ? (
                               <>
-                              {console.log(readingBooks.find(
-                              (el) => el.book_version_id == edition.id
-                            ).paused)}
                                 {readingBooks.find(
                               (el) => el.book_version_id == edition.id
                             ).paused ? (
@@ -165,7 +167,7 @@ function EditionsInfo() {
                           </div>
                         ) : (
                           <button
-                            onClick={() => {}}
+                            onClick={() => {addBook(edition)}}
                             className="bg-white px-2 py-1 rounded-full"
                           >
                             Add to reading

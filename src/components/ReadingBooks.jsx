@@ -125,7 +125,7 @@ function ReadingBooks() {
             }
           <div className="flex justify-center">
             {readingBooks.length > 3 && (
-                <NavLink>
+                <NavLink to={"/mybooks"}>
                   <button className="mt-4 py-1 px-2 rounded-lg bg-[#f8f2e9] shadow-md">
                     See more
                   </button>
