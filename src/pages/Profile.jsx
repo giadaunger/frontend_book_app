@@ -7,9 +7,8 @@ function Profile() {
     const { user, setUser, fetchUser } = GetUserStore();
     const { user_name, setUsername, book_goal, setBookGoal, email, setEmail, updateUser } = UpdateUserStore()
     const [editMode, setEditMode] = useState(false);
-    const [bookGoalErrMsg, setBookGoalErrMsg] = useState("");
     const [usernameErrMsg, setUsernameErrMsg] = useState("");
-    const [gmailErrMsg, setGmailErrMsg] = useState("");
+    const [emailErrMsg, setEmailErrMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
 
@@ -54,7 +53,6 @@ function Profile() {
         }
     };
 
-
     const handleUsernameChange = (e) => {
         const newUsername = e.target.value;
         setUsername(newUsername)
@@ -73,14 +71,22 @@ function Profile() {
     const handleEmailChange = (e) => {
         const newEmail = e.target.value;
         setEmail(newEmail)
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regex.test(newEmail)) {
+            setEmailErrMsg("Invalid email format");
+        } else {
+            setEmailErrMsg("");
+        }
     }
-
 
     const handleBookGoalChange = (e) => {
         const newBookGoal = e.target.value;
         setBookGoal(newBookGoal)
     }
 
+    const isSaveDisabled = () => {
+        return usernameErrMsg || emailErrMsg;
+    };
 
     return (
         <div>
@@ -122,7 +128,7 @@ function Profile() {
                                         onChange={handleEmailChange}
                                         className="sm:p-2 p-1 sm:w-10/12" />
                                 </div>
-                                {gmailErrMsg && <p className="text-red-500 text-center mb-5">{gmailErrMsg}</p>}
+                                {emailErrMsg && <p className="text-red-500 text-center mb-5">{emailErrMsg}</p>}
                                 <div className="flex flex-col lg:flex-row lg:space-x-2 text-xl mx-auto mb-5">
                                     <label>Book goal</label>
                                     <input
@@ -134,12 +140,11 @@ function Profile() {
                                         onChange={handleBookGoalChange}
                                         className="sm:p-2 p-1 sm:w-10/12" />
                                 </div>
-                                {bookGoalErrMsg && <p className="text-red-500 text-center mb-5">{bookGoalErrMsg}</p>}
                                 <div className="flex justify-center mx-auto space-x-5 text-center mt-16">
                                     <button
                                         onClick={handleSaveClick}
-                                        className="border border-black rounded p-2 shadow-md transition duration-300 hover:scale-125">
-                                        Save
+                                        disabled={isSaveDisabled()}
+                                        className={`border p-2 rounded shadow-md transition duration-300 hover:scale-125 ${isSaveDisabled() ? 'text-gray-500 pointer-events-none' : 'border-black'}`}>                                        Save
                                     </button>
                                     <button
                                         onClick={handleCancelClick}
