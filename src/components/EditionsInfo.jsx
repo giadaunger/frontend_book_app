@@ -15,18 +15,16 @@ function EditionsInfo() {
     pausedBooksReading,
     setBooksReading,
   } = ReadingBooksStore();
-  const { put_paused, put_unpaused } = UpdateBookVersionStore();
+  const { putPaused, putUnpaused,changeEdition } = UpdateBookVersionStore();
   const [onBook, setOnBook] = useState(true);
-  const [pauseModal, setPauseModal] = useState(false);
+  const [changeModal, setChangeModal] = useState(false);
   const [currentVersion, setCurrentVersion] = useState(false);
   const ref = useRef(null);
-
-  function handlePauseModal() {}
 
   useEffect(() => {
     const handleOutSideClick = (event) => {
       if (!ref.current?.contains(event.target)) {
-        setPauseModal(false);
+        setChangeModal(false);
       }
     };
 
@@ -39,11 +37,11 @@ function EditionsInfo() {
 
   async function pauseBook() {
     console.log(currentVersion);
-    const res = await put_paused(currentVersion.id);
+    const res = await putPaused(currentVersion.id);
     if (res) {
       await fetchReadingBooks();
     }
-    setPauseModal(false);
+    setChangeModal(false);
   }
 
   useEffect(() => {
@@ -57,7 +55,7 @@ function EditionsInfo() {
       (el) => el.book_version.book.id == pageBook.id
     );
     console.log("shelf", shelf);
-    const response = await put_unpaused(shelf.book_version_id);
+    const response = await putUnpaused(shelf.book_version_id);
     try {
       if (response === true) {
         const res = await fetchReadingBooks();
@@ -67,25 +65,47 @@ function EditionsInfo() {
     }
   }
 
+ async function changeBookEdition(){
+    const shelf = readingBooks.find(
+        (el) => el.book_version.book.id == pageBook.id
+      )
+      console.log(shelf)
+      const response = await changeEdition(shelf.book_version_id, currentVersion.id);
+      try {
+        if (response === true) {
+          const res = await fetchReadingBooks();
+          setChangeModal(false)
+        }
+      } catch (error) {
+        console.error("Error during update:", error);
+      }
+    
+  }
+
+  function handleChange(){
+
+  }
+
   return (
     <div>
-      {pauseModal && (
+      {changeModal && (
         <div className="fixed">
           <div className="fixed inset-0 overflow-auto bg-gray-800 opacity-50 "></div>
           <div
             ref={ref}
             className="shadow-lg flex gap-4 flex-col fixed p-10 rounded-lg inset-x-0 mx-auto w-80 sm:w-96 mt-[5vh] bg-white"
           >
-            <div className="flex gap-4 mx-auto">Pause Book?</div>
+            <div className="text-center">Change Edition?</div>
+            <div className="text-center">Book may be marked as read if recorded pages are higher than edition pages, proceed?</div>
             <div className="flex">
               <button
-                onClick={() => setPauseModal(false)}
+                onClick={() => setChangeModal(false)}
                 className="bg-blue-500 shadow-md text-white py-2 mx-auto px-4 rounded-lg"
               >
                 No
               </button>
               <button
-                onClick={() => pauseBook()}
+                onClick={() => changeBookEdition()}
                 className="bg-blue-500 shadow-md text-white py-2 mx-auto px-4 rounded-lg"
               >
                 Yes
@@ -126,7 +146,7 @@ function EditionsInfo() {
                                   <button
                                     onClick={() => {
                                       setCurrentVersion(edition),
-                                        setPauseModal(true);
+                                      pauseBook();
                                     }}
                                     className="bg-white px-2 py-1 rounded-full shadow-md"
                                   >
@@ -136,7 +156,7 @@ function EditionsInfo() {
                               </>
                             ) : (
                               <button
-                                onClick={() => {}}
+                                onClick={() => {setCurrentVersion(edition), setChangeModal(true)}}
                                 className="bg-white px-2 py-1 rounded-full shadow-md"
                               >
                                 Change edition

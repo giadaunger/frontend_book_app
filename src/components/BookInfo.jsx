@@ -15,7 +15,7 @@ function BookInfo({ handleEditionPage }) {
     setBooksReading,
     fetchReadingBooks,
   } = ReadingBooksStore();
-  const { put_unpaused } = UpdateBookVersionStore();
+  const { putUnpaused } = UpdateBookVersionStore();
   const { book_id } = useParams();
   const [updateModal, setUpdateModal] = useState(false);
 
@@ -29,7 +29,7 @@ function BookInfo({ handleEditionPage }) {
       (el) => el.book_version.book.id == pageBook.id
     );
     console.log("shelf", shelf);
-    const response = await put_unpaused(shelf.book_version_id);
+    const response = await putUnpaused(shelf.book_version_id);
     try {
       if (response === true) {
         const res = await fetchReadingBooks();
