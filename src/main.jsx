@@ -14,7 +14,8 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import FindBooks from './pages/FindBooks';
 import BookPage from './pages/BookPage';
-import Password from './pages/Password';
+import UpdatePassword from './pages/UpdatePassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
 
@@ -28,13 +29,14 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/bookpage/:book_id" element={<BookPage />}></Route>
+          <Route path="/reset-password" element={<ResetPassword />}></Route>
           {/* Privet Routes */}
           <Route element={<PrivateRoutes />}>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/statistics" element={<Statistics />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/findbooks" element={<FindBooks />}></Route>
-            <Route path="/password" element={<Password />}></Route>
+            <Route path="/update-password" element={<UpdatePassword />}></Route>
           </Route>
         </Route>
       </Routes>

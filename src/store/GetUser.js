@@ -27,6 +27,25 @@ const GetUserStore = create((set) => ({
             console.error("Error fetching user:", error);
         }
     },
+    userWithEmail: "",
+    setUserWithEmail: (userEmail) => set({ userWithEmail: userEmail }),
+    fetchUserWithEmail: async (email) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/user/${email}`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                console.log("Fail");
+                throw new Error("Failed to fetch user");
+            }
+            const userInfo = await response.json();
+            set({ userWithEmail: userInfo });
+            return userInfo
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    },
 }));
 
 export default GetUserStore;

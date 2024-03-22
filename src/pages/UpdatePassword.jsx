@@ -5,7 +5,7 @@ import Logo from "../assets/StoryDataLogo.png";
 import UpdateUserStore from "../store/UpdateUser";
 import { getCookie } from "../cookies";
 
-function Password() {
+function UpdatePassword() {
     const { password, setPassword, updatePassword } = UpdateUserStore()
     const [repeatedPassword, setRepeatedPassword] = useState("");
     const [error, setError] = useState("");
@@ -65,4 +65,4 @@ function Password() {
     );
 }
 
-export default Password;
+export default UpdatePassword;
