@@ -11,7 +11,7 @@ function BookPage() {
     ReadingBooksStore();
   const { fetchPopularEditions, foundEditions } = FindBooksStore();
   const { fetchPageBook, pageBook } = BookPageStore();
-  const { book_id } = useParams();
+  const { book_id, tab } = useParams();
   const [onBook, setOnBook] = useState(true);
   const [bookTabColor, setBookTabColor] = useState("#f8f2e9");
   const [editionTabColor, setEditionTabColor] = useState("#fcf8f4");
@@ -28,6 +28,12 @@ function BookPage() {
         setBooksReading(readingBooks)
     }}
   }, [readingBooks]);
+
+  useEffect(() =>{
+    if (tab === "editions"){
+        handleEditionPage()
+    }
+  },[])
 
 
   function handleBookPage() {

@@ -2,9 +2,10 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-function ReadingBook({ book, setPageModal, setBookPage }) {
+function ReadingBook({ book, setPageModal, setBookPage, setCurrentBook }) {
   const [percentage, setPercentage] = useState(0);
   const [color, setColor] = useState(0);
+  const [label, setLabel] = useState(false)
 
   useEffect(() => {
     if (book.pages_read > 0) {
@@ -21,7 +22,34 @@ function ReadingBook({ book, setPageModal, setBookPage }) {
     else{
         setColor("#000000")
     }
+
   }, []);
+
+useEffect(() => {
+    if (book.pages_read > 0) {
+      setPercentage(
+        Math.floor((book.pages_read / book.book_version.page_count) * 100)
+      );
+    } else {
+      setPercentage(0);
+    }
+
+    if (book.book_version.book.main_category.color_code) {
+      setColor(book.book_version.book.main_category.color_code);
+    }
+    else{
+        setColor("#000000")
+    }
+  }, [book])
+
+  useEffect(()=>{
+    if (percentage < 50){
+        setLabel(false)
+    }
+    else{
+        setLabel(true)
+    }
+  },[percentage])
 
   return (
     <div className="flex flex-col items-center">
@@ -34,6 +62,7 @@ function ReadingBook({ book, setPageModal, setBookPage }) {
             bgColor={color}
             baseBgColor="#d1c7b8"
             className="w-20 border-white border-4 rounded-xl"
+            isLabelVisible={label}
           />
         </div>
         <div className="overflow-clip">
@@ -44,7 +73,7 @@ function ReadingBook({ book, setPageModal, setBookPage }) {
           <div>{percentage}% done</div>
           <button
             onClick={() => {
-              setPageModal(true), setBookPage(book.pages_read);
+              setCurrentBook(book) ,setPageModal(true), setBookPage(book.pages_read);
             }}
             className="bg-[#ffffff] py-2 px-3 rounded-lg mt-2 shadow-md"
           >

@@ -3,10 +3,10 @@ import { NavLink } from "react-router-dom";
 import ReadingBooksStore from "../store/ReadingBooksStore";
 
 
-function BookSearchBook({ book, handleModal}) {
+function BookSearchBook({ book, handleModal, setCurrentBook}) {
     const {readingBooks, booksReadingId} = ReadingBooksStore()
     return (
-    <div className="bg-[#f8f2e9] shadow-md justify-center flex flex-col items-center rounded-lg h-full pt-2">
+    <div className="bg-[#f8f2e9] shadow-md h-full justify-center flex flex-col items-center rounded-lg h-full pt-2">
       {book.versions[0] && (
         <NavLink to={`/bookpage/${book.id}`} className="flex flex-col items-center">
           <img className="h-40" src={book.versions[0].book_cover.url} alt="" />
@@ -22,7 +22,6 @@ function BookSearchBook({ book, handleModal}) {
       </div>
       { booksReadingId &&
       <div>
-          {console.log(booksReadingId)}
           {!booksReadingId.includes(book.id) ?
             <button
             onClick={() => {

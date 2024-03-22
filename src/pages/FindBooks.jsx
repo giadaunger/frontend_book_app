@@ -3,6 +3,7 @@ import SearchBar from "../components/SearchBar";
 import FindBooksStore from "../store/FindBooksStore";
 import BookSearchBook from "../components/BookSearchBook";
 import ReadingBookStore from "../store/ReadingBooksStore";
+import { NavLink } from "react-router-dom";
 
 function FindBooks() {
   const { foundBooks, fetchPopularEditions, foundEditions, addToReading } =
@@ -11,6 +12,7 @@ function FindBooks() {
   const [bookAddModal, setBookAddModal] = useState(false);
   const [addedModal, setAddedModal] = useState(false);
   const [editions, setEditions] = useState([]);
+  const [currentBook, setCurrentBook] = useState()
   const ref = useRef(null);
 
   useEffect(() => {
@@ -57,6 +59,7 @@ function FindBooks() {
   }, [ref]);
 
   async function handleModal(book) {
+    setCurrentBook(book)
     await fetchPopularEditions(book.id);
     if (foundEditions) {
       setEditions(foundEditions);
@@ -87,8 +90,8 @@ function FindBooks() {
               <div className="flex justify-center gap-4">
                 {foundEditions ? (
                   <div className="flex flex-col items-center">
-                    <div className="flex justify-center gap-4">
-                      {foundEditions.slice(0, 4).map((version) => {
+                    <div className="flex j  ustify-center gap-4">
+                      {foundEditions.slice(0, 3).map((version) => {
                         return (
                           <button
                             onClick={(e) => addBook(e, version)}
@@ -103,15 +106,15 @@ function FindBooks() {
                       })}
                     </div>
                     {foundEditions.length > 4 && (
-                      <button className="text-center text-blue-500 mt-2">
+                      <NavLink to={`/bookpage/${currentBook.id}/editions`} className="text-center text-blue-500 mt-2">
                         See more
-                      </button>
+                      </NavLink>
                     )}
                   </div>
                 ) : (
                   <div className="flex flex-col items-center">
                     <div className="flex justify-center gap-4">
-                      {currentBook.versions.slice(0, 4).map((version) => {
+                      {currentBook.versions.slice(0, 3).map((version) => {
                         return (
                           <button className="text-sm text-center">
                             <img src={version.book_cover.url} alt="" />
@@ -157,11 +160,12 @@ function FindBooks() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-2 gap-x-3 md:w-2/3 w-11/12 mt-10">
           {foundBooks &&
-            foundBooks.map((book) => {
+            foundBooks.filter((el)=> el.versions.length > 0).map((book) => {
               return (
                 <div>
                   {book && (
                     <BookSearchBook
+                    setCurrentBook = {() => setCurrentBook()}
                       book={book}
                       handleModal={(e) => handleModal(e)}
                     />
