@@ -8,7 +8,7 @@ import { generateSlug } from "random-word-slugs";
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
-    const { userWithEmail, setUserWithEmail, fetchUserWithEmail, userWithUsername, setUserWithUsername, fetchUserWithUsername } = GetUserStore()
+    const { userWithEmail, fetchUserWithEmail } = GetUserStore();
     const { email, setEmail, password, setPassword, user_name, setUsername, createUser } = createUserStore();
     const { fetchToken } = useStore();
     const navigate = useNavigate();
@@ -16,17 +16,17 @@ function SignUp() {
     const [passwordErrMsg, setPasswordErrMsg] = useState("");
     const [emailErrMsg, setEmailErrMsg] = useState("");
 
-    function usernameGenerator() {
-        const generatedUsername = generateSlug()
-        const checkIfUsernameExists = fetchUserWithEmail(generatedUsername)
-        if (!checkIfUsernameExists) {
-            setUsername(generatedUsername)
-        }
-    }
-
     useEffect(() => {
         usernameGenerator();
     }, []);
+
+    const usernameGenerator = async () => {
+        const generatedUsername = generateSlug();
+        const checkIfUsernameExists = await fetchUserWithEmail(generatedUsername);
+        if (!checkIfUsernameExists) {
+            setUsername(generatedUsername);
+        }
+    };
 
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value;
@@ -34,37 +34,38 @@ function SignUp() {
 
         if (newPassword.length < 5) {
             setPasswordErrMsg("Password too short, minimum of 5 characters");
-        }
-        else if (newPassword.length > 100) {
-            setPasswordErrMsg("Password too long, maximum of 100 characters")
-        }
-        else {
+        } else if (newPassword.length > 100) {
+            setPasswordErrMsg("Password too long, maximum of 100 characters");
+        } else {
             setPasswordErrMsg("");
         }
     };
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = async (e) => {
         const newEmail = e.target.value;
-        const checkIfEmailExists = fetchUserWithEmail(newEmail)
-        setEmail(newEmail)
+        setEmail(newEmail);
+
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regex.test(newEmail)) {
             setEmailErrMsg("Invalid email format");
-        } if (checkIfEmailExists) {
-            setEmailErrMsg("Email is already in use")
         } else {
-            setEmailErrMsg("");
+            const checkIfEmailExists = await fetchUserWithEmail(newEmail);
+            if (checkIfEmailExists) {
+                setEmailErrMsg("Email is already in use");
+            } else {
+                setEmailErrMsg("");
+            }
         }
-    }
+    };
 
     const isSubmitDisabled = () => {
         return passwordErrMsg || emailErrMsg;
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            e.preventDefault();
-            usernameGenerator();
+            await usernameGenerator();
             const newUser = await createUser({ email, password, user_name });
             if (newUser) {
                 const res = await fetchToken(email, password);
@@ -76,12 +77,9 @@ function SignUp() {
             }
         } catch (error) {
             console.error("Error:", error);
-            setError("Account already exists with that username");
-            setPassword("");
-            console.log("Error: Account already exists with that email, try again!");
+            setError("Account creation failed. Please try again.");
         }
     };
-
 
     return (
         <div className="w-3/4 sm:w-2/4 mx-auto">
@@ -121,7 +119,7 @@ function SignUp() {
                         </div>
                         <button
                             type="submit"
-                            className={`border rounded-md border-black p-2 shadow-md transition duration-300 hover:scale-125  hover:bg-[#f2d2ba] hover:border-[#e8a372] ${isSubmitDisabled() ? 'text-gray-500 pointer-events-none border-gray-500' : 'border-black'}`} Save
+                            className={`border rounded-md border-black p-2 shadow-md transition duration-300 hover:scale-125  hover:bg-[#f2d2ba] hover:border-[#e8a372] ${isSubmitDisabled() ? 'text-gray-500 pointer-events-none border-gray-500' : 'border-black'}`}
                             disabled={isSubmitDisabled()}>
                             Signup
                         </button>
