@@ -3,7 +3,7 @@ import { Cookies, useCookies } from "react-cookie";
 import { getCookie } from "../cookies/cookies";
 
 const ReadBooksStore = create((set) => ({
-  readBooks: [],
+  readBooks: false,
   fetchReadBooks: async () => {
     try {
       const accessToken = getCookie("accessToken")
