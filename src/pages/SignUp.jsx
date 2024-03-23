@@ -11,7 +11,8 @@ function SignUp() {
     const { fetchToken } = useStore();
     const navigate = useNavigate();
     const [error, setError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
+    const [passwordErrMsg, setPasswordErrMsg] = useState("");
+    const [emailErrMsg, setEmailErrMsg] = useState("");
 
     function usernameGenerator() {
         const generatedUsername = generateSlug()
@@ -27,16 +28,31 @@ function SignUp() {
         setPassword(newPassword);
 
         if (newPassword.length < 5) {
-            setPasswordError("Password too short, minimum of 5 characters");
-        } 
+            setPasswordErrMsg("Password too short, minimum of 5 characters");
+        }
         else if (newPassword.length > 100) {
-            setPasswordError("Password too long, maximum of 100 characters")
+            setPasswordErrMsg("Password too long, maximum of 100 characters")
         }
         else {
-            setPasswordError("");
+            setPasswordErrMsg("");
         }
     };
 
+    const handleEmailChange = (e) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail)
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regex.test(newEmail)) {
+            setEmailErrMsg("Invalid email format");
+        } else {
+            setEmailErrMsg("");
+        }
+    }
+
+    const isSubmitDisabled = () => {
+        return passwordErrMsg || emailErrMsg;
+    };
+    
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -58,7 +74,6 @@ function SignUp() {
         }
     };
 
-    console.log("Rendering SignUp component with error:", error);
 
     return (
         <div className="w-3/4 sm:w-2/4 mx-auto">
@@ -78,10 +93,11 @@ function SignUp() {
                             type="email"
                             name="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmailChange}
                             placeholder="Enter your email"
                             className="mb-4 border border-black rounded-md p-2 w-full"
                         />
+                        {emailErrMsg && <p className="text-red-500 text-center mb-5">{emailErrMsg}</p>}
                         <label htmlFor="password">Password:</label>
                         <input
                             type="password"
@@ -92,10 +108,13 @@ function SignUp() {
                             className="mb-4 border border-black rounded-md p-2 w-full"
                         />
                         <div className="mb-5 w-full">
-                            {passwordError && <p className="text-red-500 w-full">{passwordError}</p>}
+                            {passwordErrMsg && <p className="text-red-500 w-full">{passwordErrMsg}</p>}
                             {error && <p className="text-red-500 w-full">{error}</p>}
                         </div>
-                        <button type="submit" className="border border-black rounded-md w-1/2 mx-auto bg-white">
+                        <button 
+                            type="submit" 
+                            className={`border rounded-md border-black p-2 shadow-md transition duration-300 hover:scale-125  hover:bg-[#f2d2ba] hover:border-[#e8a372] ${isSubmitDisabled() ? 'text-gray-500 pointer-events-none' : 'border-black'}`}                                      Save
+                            disabled={isSubmitDisabled()}>
                             Signup
                         </button>
                     </div>

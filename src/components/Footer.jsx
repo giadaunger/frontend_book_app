@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Logo from '../assets/StoryDataLogo.png'
 import useStore from "../store/UserStore";
 import { useCookies } from 'react-cookie';
@@ -7,6 +7,8 @@ import { useCookies } from 'react-cookie';
 function Footer() {
     const [cookies] = useCookies(['accessToken']);
     const { accessToken } = useStore();
+    const location = useLocation();
+
 
     return (
         <footer className="bg-[#f8f2e9] mt-10">
