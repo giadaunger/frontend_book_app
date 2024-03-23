@@ -3,10 +3,12 @@ import GoBackBtn from '../components/GoBackBtn';
 import Logo from '../assets/StoryDataLogo.png';
 import createUserStore from '../store/CreateUserStore';
 import useStore from "../store/UserStore";
+import GetUserStore from '../store/GetUser';
 import { generateSlug } from "random-word-slugs";
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+    const { userWithEmail, setUserWithEmail, fetchUserWithEmail, userWithUsername, setUserWithUsername, fetchUserWithUsername } = GetUserStore()
     const { email, setEmail, password, setPassword, user_name, setUsername, createUser } = createUserStore();
     const { fetchToken } = useStore();
     const navigate = useNavigate();
@@ -16,7 +18,10 @@ function SignUp() {
 
     function usernameGenerator() {
         const generatedUsername = generateSlug()
-        setUsername(generatedUsername)
+        const checkIfUsernameExists = fetchUserWithEmail(generatedUsername)
+        if (!checkIfUsernameExists) {
+            setUsername(generatedUsername)
+        }
     }
 
     useEffect(() => {
@@ -40,10 +45,13 @@ function SignUp() {
 
     const handleEmailChange = (e) => {
         const newEmail = e.target.value;
+        const checkIfEmailExists = fetchUserWithEmail(newEmail)
         setEmail(newEmail)
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regex.test(newEmail)) {
             setEmailErrMsg("Invalid email format");
+        } if (checkIfEmailExists) {
+            setEmailErrMsg("Email is already in use")
         } else {
             setEmailErrMsg("");
         }
@@ -52,7 +60,7 @@ function SignUp() {
     const isSubmitDisabled = () => {
         return passwordErrMsg || emailErrMsg;
     };
-    
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -111,9 +119,9 @@ function SignUp() {
                             {passwordErrMsg && <p className="text-red-500 w-full">{passwordErrMsg}</p>}
                             {error && <p className="text-red-500 w-full">{error}</p>}
                         </div>
-                        <button 
-                            type="submit" 
-                            className={`border rounded-md border-black p-2 shadow-md transition duration-300 hover:scale-125  hover:bg-[#f2d2ba] hover:border-[#e8a372] ${isSubmitDisabled() ? 'text-gray-500 pointer-events-none' : 'border-black'}`}                                      Save
+                        <button
+                            type="submit"
+                            className={`border rounded-md border-black p-2 shadow-md transition duration-300 hover:scale-125  hover:bg-[#f2d2ba] hover:border-[#e8a372] ${isSubmitDisabled() ? 'text-gray-500 pointer-events-none border-gray-500' : 'border-black'}`} Save
                             disabled={isSubmitDisabled()}>
                             Signup
                         </button>
