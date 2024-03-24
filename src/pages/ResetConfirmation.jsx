@@ -5,7 +5,7 @@ import Logo from "../assets/StoryDataLogo.png";
 import UpdateUserStore from "../store/UpdateUser";
 import { getCookie } from "../cookies";
 
-function UpdatePassword() {
+function ResetConfirmation() {
     const { password, setPassword, updatePassword } = UpdateUserStore()
     const [repeatedPassword, setRepeatedPassword] = useState("");
     const [error, setError] = useState("");
@@ -57,7 +57,7 @@ function UpdatePassword() {
             <div className="container bg-[#f8f2e9] flex mx-auto rounded-md p-6 shadow-md">
                 <form onSubmit={checkPassword} className="mx-auto">
                     <div className="flex mx-auto flex-col">
-                        <h2 className="text-center, text-4xl p-4">Update Password</h2>
+                        <h2 className="text-center, text-4xl p-4">Reset Password</h2>
                         <img src={Logo} alt="logo" className="w-36 h-36 mx-auto" />
                         <label htmlFor="email">New password:</label>
                         <input
@@ -90,4 +90,4 @@ function UpdatePassword() {
     );
 }
 
-export default UpdatePassword;
+export default ResetConfirmation;
