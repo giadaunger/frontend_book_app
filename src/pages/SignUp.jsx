@@ -8,7 +8,7 @@ import { generateSlug } from "random-word-slugs";
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
-    const { userWithEmail, fetchUserWithEmail } = GetUserStore();
+    const { fetchUserWithEmail, fetchUserWithUsername } = GetUserStore();
     const { email, setEmail, password, setPassword, user_name, setUsername, createUser } = createUserStore();
     const { fetchToken } = useStore();
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ function SignUp() {
 
     const usernameGenerator = async () => {
         const generatedUsername = generateSlug();
-        const checkIfUsernameExists = await fetchUserWithEmail(generatedUsername);
+        const checkIfUsernameExists = await fetchUserWithUsername(generatedUsername);
         if (!checkIfUsernameExists) {
             setUsername(generatedUsername);
         }

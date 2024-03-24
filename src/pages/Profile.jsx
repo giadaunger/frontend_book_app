@@ -4,7 +4,7 @@ import UpdateUserStore from '../store/UpdateUser';
 import { Link } from 'react-router-dom';
 
 function Profile() {
-    const { user, setUser, fetchUser } = GetUserStore();
+    const { user, setUser, fetchUser, fetchUserWithEmail, fetchUserWithUsername } = GetUserStore();
     const { user_name, setUsername, book_goal, setBookGoal, email, setEmail, updateUser } = UpdateUserStore()
     const [editMode, setEditMode] = useState(false);
     const [usernameErrMsg, setUsernameErrMsg] = useState("");
@@ -64,20 +64,31 @@ function Profile() {
             setUsernameErrMsg("Password too long, maximum of 100 characters")
         }
         else {
-            setUsernameErrMsg("");
+            const checkIfUsernameExists = fetchUserWithUsername(newUsername)
+            if (checkIfUsernameExists) {
+                setUsernameErrMsg("Username is already in use")
+            } else {
+                setUsernameErrMsg("");
+            }
         }
     }
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = async (e) => {
         const newEmail = e.target.value;
-        setEmail(newEmail)
+        setEmail(newEmail);
+
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regex.test(newEmail)) {
             setEmailErrMsg("Invalid email format");
         } else {
-            setEmailErrMsg("");
+            const checkIfEmailExists = await fetchUserWithEmail(newEmail);
+            if (checkIfEmailExists) {
+                setEmailErrMsg("Email is already in use");
+            } else {
+                setEmailErrMsg("");
+            }
         }
-    }
+    };
 
     const handleBookGoalChange = (e) => {
         const newBookGoal = e.target.value;
