@@ -4,7 +4,7 @@ import Logo from "../assets/StoryDataLogo.png";
 import GetUserStore from "../store/GetUser";
 
 function ResetPassword() {
-    const { userWithEmail, setUserWithEmail, fetchUserWithEmail } = GetUserStore()
+    const { fetchUserWithEmail } = GetUserStore()
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
 
@@ -15,6 +15,23 @@ function ResetPassword() {
             console.log(userEmail);
         } else (error) => {
             console.log("Error " + error);
+        }
+    };
+
+    const handleEmailChange = async (e) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regex.test(newEmail)) {
+            setError("Invalid email format");
+        } else {
+            const checkIfEmailExists = await fetchUserWithEmail(newEmail);
+            if (!checkIfEmailExists) {
+                setError("No user found");
+            } else {
+                setError("");
+            }
         }
     };
 
@@ -30,7 +47,7 @@ function ResetPassword() {
                         <label htmlFor="email">Email:</label>
                         <input
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmailChange}
                             type="email"
                             placeholder="Enter your email"
                             className="mb-4 border border-black rounded-md p-2"
