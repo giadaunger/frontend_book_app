@@ -25,7 +25,7 @@ function BookGoalShelf() {
   return (
     <div className="bg-[#f8f2e9]">
       <div className="absolute bg-black hidden">heeyy</div>
-      <svg
+      {readBooks[0] && <svg
         className="scale-[0.20] origin-top-left stroke-8 stroke-white fill-[#f8f2e9]"
         width="800"
         height="600"
@@ -75,7 +75,7 @@ function BookGoalShelf() {
             fill={`${colorCodes[4]}`}
           />
         </g>
-      </svg>
+      </svg>}
     </div>
   );
 }
