@@ -52,7 +52,7 @@ function DashboardStatistics() {
     }, [user, readBooks]);
 
     return (
-        <div className="w-4/5 lg:w-2/4 mx-auto bg-[#f8f2e9] p-4 rounded-md shadow-md border">
+        <div className="w-4/5 lg:w-2/4 mx-auto bg-[#f8f2e9] p-4 rounded-md shadow-md">
             <div className="grid lg:grid-cols-2 w-11/12 lg:w-3/4 mx-auto p-4 space-y-5 lg:space-y-0">
                 {user && (
                     <div className="space-y-5">

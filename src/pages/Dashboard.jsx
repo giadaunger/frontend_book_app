@@ -12,9 +12,9 @@ function Dashboard() {
       <div className="mb-16">
         <DashboardStatistics />
       </div>
-      <div>
+      {/* <div>
         <DashboardRecommendation />
-      </div>
+      </div> */}
     </div>
   )
 }
