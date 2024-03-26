@@ -4,7 +4,7 @@ import PausedBooks from "../components/PausedBooks";
 import ReadBooks from "../components/ReadBooks";
 import BooksBeingRead from "../components/BooksBeingRead";
 import ReadBooksStore from "../store/ReadBooksStore";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function MyBooks() {
   const { fetchReadingBooks } = ReadingBooksStore();
@@ -49,11 +49,18 @@ function MyBooks() {
     setPausedTabColor("#f8f2e9")
     setReadingTabColor("#ffffff")
     setReadTabColor("#ffffff")
-
   }
 
   return (
     <div className="md:w-2/3 w-11/12 mx-auto">
+      <Link to="/dashboard">
+        <button
+          className="flex bg-[#f7f2e3] py-2 px-4 rounded-md border font-semibold mt-2 shadow-md transition duration-300 hover:scale-125 hover:bg-[#bde1ed] hover:border-[#71bfd9]" >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+          </svg>
+          Dashboard
+        </button></Link>
       <div className="flex gap-4 justify-center">
         <button
           onClick={() => handleReadingPage()}
@@ -75,15 +82,15 @@ function MyBooks() {
         </button>
       </div>
       <div className="bg-[#f8f2e9] rounded-lg p-4">
-          {pageTab === "reading" ? (
-            <BooksBeingRead />
-          ) : pageTab === "read" ? (
-            <ReadBooks />
-          ) : pageTab === "paused" ? (
-            <PausedBooks />
-          ) : (
-            <div></div>
-          )}
+        {pageTab === "reading" ? (
+          <BooksBeingRead />
+        ) : pageTab === "read" ? (
+          <ReadBooks />
+        ) : pageTab === "paused" ? (
+          <PausedBooks />
+        ) : (
+          <div></div>
+        )}
       </div>
     </div>
   );

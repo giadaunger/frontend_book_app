@@ -18,6 +18,7 @@ import UpdatePassword from "./pages/UpdatePassword";
 import ResetPassword from "./pages/ResetPassword";
 import MyBooks from "./pages/MyBooks";
 import BookGoalShelf from "./pages/BookGoalShelf";
+import ResetConfirmation from "./pages/ResetConfirmation";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="/mybooks/:tab" element={<MyBooks />}></Route>
             <Route path="/update-password" element={<UpdatePassword />}></Route>
             <Route path="/bookgoal" element={<BookGoalShelf />}></Route>
+            <Route path="" element={<ResetConfirmation />}></Route>
           </Route>
         </Route>
       </Routes>

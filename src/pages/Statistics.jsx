@@ -227,7 +227,7 @@ function Statistics() {
           height={400}
         />
       </div>
-      <h3 className="text-xl mb-10 text-center">{`Most read genres - ${(new Date().getFullYear())}`}</h3>
+      <h3 className="text-xl mb-10 text-center">{`Most read genres - ${currentYear}`}</h3>
       <div className="flex justify-start mb-20">
         <PieChart
           series={[{ data: pieChartGenreDataThisYear }]}
@@ -243,7 +243,7 @@ function Statistics() {
           height={400}
         />
       </div>
-      <h3 className="text-xl mb-10 text-center">{`Most read authors - ${(new Date().getFullYear())}`}</h3>
+      <h3 className="text-xl mb-10 text-center">{`Most read authors - ${currentYear}`}</h3>
       <div className="flex justify-start mb-20">
         <PieChart
           series={[{ data: pieChartAuthorsDataThisYear }]}
@@ -261,7 +261,7 @@ function Statistics() {
         />
       </div>
 
-      <h3 className="text-xl mb-10 text-center">{`Books vs e-books ${(new Date().getFullYear())}`}</h3>
+      <h3 className="text-xl mb-10 text-center">{`Books vs e-books ${currentYear}`}</h3>
       <div className="flex justify-start mb-20">
         <PieChart
           series={[{ data: pieChartBookTypeDataThisYear }]}
@@ -270,7 +270,7 @@ function Statistics() {
         />
       </div>
 
-      <h3 className="text-xl mb-10 text-center">{`Books started each month - ${(new Date().getFullYear())}`}</h3>
+      <h3 className="text-xl mb-10 text-center">{`Books started each month - ${currentYear}`}</h3>
       <div>
         <Chart
           chartType="ColumnChart"
@@ -281,7 +281,7 @@ function Statistics() {
         />
       </div>
 
-      <h3 className="text-xl mb-10 text-center">{`Books finished each month - ${(new Date().getFullYear())}`}</h3>
+      <h3 className="text-xl mb-10 text-center">{`Books finished each month - ${currentYear}`}</h3>
       <div>
         <Chart
           chartType="ColumnChart"
@@ -292,7 +292,7 @@ function Statistics() {
         />
       </div>
 
-      <h3 className="text-xl mb-10 text-center">{`Books duration - ${(new Date().getFullYear())}`}</h3>
+      <h3 className="text-xl mb-10 text-center">{`Books duration - ${currentYear}`}</h3>
       <div>
         <Chart
           chartType="BarChart"

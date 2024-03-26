@@ -46,6 +46,25 @@ const GetUserStore = create((set) => ({
             console.error("Error fetching user:", error);
         }
     },
+    userWithUsername: "",
+    setUserWithUsername: (userUsername) => set({ userWithUsername: userUsername }),
+    fetchUserWithUsername: async (user_name) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/user/${user_name}`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                console.log("Fail");
+                throw new Error("Failed to fetch user");
+            }
+            const userInfo = await response.json();
+            set({ userWithUsername: userInfo });
+            return userInfo
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    },
 }));
 
 export default GetUserStore;

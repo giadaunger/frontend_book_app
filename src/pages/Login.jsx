@@ -56,27 +56,20 @@ function Login() {
               className="mb-4 border border-black rounded-md p-2"
             />
             {error && <p className="text-red-500">{error}</p>}
-            <div className="flex justify-between">
-              <button
-                type="submit"
-                className="border border-black rounded-md p-2 w-1/3 bg-white"
-              >
-                Login
-              </button>
-              <Link to="/reset-password">
-                <button
-                  className="border border-black rounded-md p-2 bg-white">
-                  Reset password
-                </button>
-              </Link>
-            </div>
-            <p className="text-center mt-6 text-sm">
+            <button
+              type="submit"
+              className="border border-black rounded-md p-2 w-1/3 bg-white mx-auto transition duration-300 hover:scale-125  hover:bg-[#f2d2ba] hover:border-[#e8a372] "
+            >
+              Login
+            </button>
+            <p className="text-center mt-6 text-sm mb-5">
               No account?
-              <a href="/signup" className="text-blue-500">
+              <a href="/signup" className="text-[#7ad56a] font-bold transition duration-300 hover:scale-110 hover:text-[#71bfd9]">
                 {" "}
                 Create one
               </a>
             </p>
+            <a href="/reset-password" className="text-sm text-[#7ad56a] font-bold text-center transition duration-300 hover:scale-110 hover:text-[#71bfd9]">Forgot password?</a>
           </div>
         </form>
       </div>

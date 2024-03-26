@@ -39,6 +39,7 @@ function SignedInNav() {
                         className="w-24 h-24" />
                 </NavLink>
                 <div ref={ref} className="ml-auto lg:ml-0 flex items-center text-black">
+
                     <div className="lg:hidden">
                         <button onClick={toggleMenu} className="focus:outline-none mr-5 mt-2 transition duration-300 hover:scale-110 hover:text-[#71bfd9]">
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
