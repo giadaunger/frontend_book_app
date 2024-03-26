@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../assets/StoryDataLogo.png'
 import useStore from "../store/UserStore";
@@ -9,11 +9,25 @@ function SignedInNav() {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
     const { setUser } = useStore();
+    const ref = useRef(null);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
     
+    useEffect(() => {
+        const handleOutSideClick = (event) => {
+          if (!ref.current?.contains(event.target)) {
+            setIsOpen(false)
+          }
+        };
+    
+        window.addEventListener("mousedown", handleOutSideClick);
+    
+        return () => {
+          window.removeEventListener("mousedown", handleOutSideClick);
+        };
+      }, [ref]);    
 
     return (
         <header className="flex justify-center bg-[#f8f2e9] shadow-md mb-10">
@@ -24,7 +38,8 @@ function SignedInNav() {
                         alt="logo"
                         className="w-24 h-24" />
                 </NavLink>
-                <div className="ml-auto lg:ml-0 flex items-center text-black">
+                <div ref={ref} className="ml-auto lg:ml-0 flex items-center text-black">
+
                     <div className="lg:hidden">
                         <button onClick={toggleMenu} className="focus:outline-none mr-5 mt-2 transition duration-300 hover:scale-110 hover:text-[#71bfd9]">
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

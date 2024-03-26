@@ -1,5 +1,6 @@
 import React from 'react'
 import ReadBooksStore from '../store/ReadBooksStore'
+import { NavLink } from 'react-router-dom'
 
 function ReadBooks() {
     const {readBooks} = ReadBooksStore()
@@ -7,10 +8,10 @@ function ReadBooks() {
     <div>{readBooks &&
         readBooks.map(book =>{
           return(
-              <div>
+              <NavLink to={`/bookpage/${book.book_version.book.id}`}>
                   <img src={book.book_version.book_cover.url} alt="" />
                   {book.book_version.book.title}
-              </div>
+              </NavLink>
           )
         })}</div>
 
