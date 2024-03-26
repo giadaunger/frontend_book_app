@@ -7,6 +7,30 @@ const UpdateUserStore = create((set) => ({
     setUsername: (newUsername) => set({ user_name: newUsername }),
     book_goal: "",
     setBookGoal: (newBookGoal) => set({ book_goal: newBookGoal }),
+    updateBookGoal: async (book_goal) => {
+        try {
+            const accessToken = getCookie("accessToken")
+            const response = await fetch(`http://127.0.0.1:8000/user/new-book-goal/${book_goal}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken.access_token}`,
+                },
+                body: JSON.stringify(book_goal),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed uppdate book goal");
+            }
+
+            const data = await response.json();
+            set({ book_goal: data.book_goal })
+            return data;
+        } catch (error) {
+            console.error("Error creating user:", error);
+            throw error;
+        }
+    }, 
     email: "",
     setEmail: (newEmail) => set({ email: newEmail }),
     updateUser: async ({ user_name, book_goal, email }) => {
@@ -35,7 +59,6 @@ const UpdateUserStore = create((set) => ({
             throw error;
         }
     },
-
     password: "",
     setPassword: (newPassword) => set({ password: newPassword }),
     updatePassword: async (password) => {
