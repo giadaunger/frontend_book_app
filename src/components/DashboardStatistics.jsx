@@ -51,9 +51,6 @@ function DashboardStatistics() {
         }
     }, [user, readBooks]);
 
-    useEffect(() => {
-        fetchReadBooks();
-    }, [readBooks]);
 
     return (
         <div className="w-4/5 lg:w-2/4 mx-auto bg-[#f8f2e9] p-4 rounded-md shadow-md">
