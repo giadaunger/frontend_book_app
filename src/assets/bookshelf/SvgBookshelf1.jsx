@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 function SvgBookshelf1({ booksToRender, colorCodesToRender }) {
+  console.log("inside",booksToRender)
   return (
     <div className="svg-container w-[10rem] h-[10rem] stroke-8">
       <svg

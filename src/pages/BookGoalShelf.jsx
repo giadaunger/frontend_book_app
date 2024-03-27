@@ -15,9 +15,12 @@ import Svg1Book from "../assets/bookshelf/Svg1Book";
 import Svg2Books from "../assets/bookshelf/Svg2Books";
 import Svg3Books from "../assets/bookshelf/Svg3Books";
 import Svg4Books from "../assets/bookshelf/Svg4Books";
+import { render } from "react-dom";
 
 function BookGoalShelf() {
   const [colorCodes, setColorCodes] = useState([]);
+  const [renders, setRenders] = useState(0);
+  const [renderUnder5, setRenderUnder5] = useState(0);
   const { readBooks, fetchReadBooks } = ReadBooksStore();
   const { fetchBookGoal, bookGoal } = BookGoalStore();
   const bookshelves = [
@@ -30,10 +33,13 @@ function BookGoalShelf() {
     SvgBookshelf7,
     SvgBookshelf8,
     SvgBookshelf9,
-    SvgBookshelf10
+    SvgBookshelf10,
   ];
+  const lessThan5Books = [Svg1Book, Svg2Books, Svg3Books, Svg4Books];
 
-  const lessThan5Books = [Svg1Book, Svg2Books, Svg3Books, Svg4Books]
+  let LastRender;
+  let lastColors
+  let lastBooks
 
   useEffect(() => {
     fetchReadBooks();
@@ -51,6 +57,17 @@ function BookGoalShelf() {
     }
   }, [readBooks]);
 
+  useEffect(() => {
+    setRenderUnder5(bookGoal % 5);
+    if (renderUnder5!= 0){
+      setRenders(Math.floor(bookGoal / 5)+1)
+    }
+    else{
+      setRenders(Math.floor(bookGoal / 5))
+    }
+    console.log(renders)
+  }, [bookGoal]);
+
   console.log("colorCodes:", colorCodes);
   return (
     <div className="bg-[#34271c]">
@@ -58,12 +75,19 @@ function BookGoalShelf() {
         <>
           {bookGoal && (
             <div className="flex flex-wrap justify-center w-[2/3]">
-              {Array.from({ length: bookGoal / 5 }).map((_, index) => {
-                const ComponentToRender = bookshelves[index % bookshelves.length];
+              {Array.from({ length: renders }).map((_, index) => {
+                
+                let ComponentToRender
+                if (index == renders-1 && renderUnder5!=0){
+                  ComponentToRender = lessThan5Books[renderUnder5-1]
+                } 
+                else
+                {ComponentToRender = bookshelves[index % bookshelves.length]};
+                
+                
                 const start = 5 * index;
-                const end = start + 5; // Assuming you want slices of 5 items each time
+                const end = start + 5; 
 
-                // Use the calculated indices to slice the readBooks array
                 const booksToRender = readBooks.slice(start, end);
                 const colorCodesToRender = colorCodes.slice(start, end);
 
@@ -77,6 +101,7 @@ function BookGoalShelf() {
                   </div>
                 );
               })}
+
             </div>
           )}
         </>

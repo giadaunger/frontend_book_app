@@ -45,6 +45,7 @@ function Svg1Book({ booksToRender, colorCodesToRender }) {
               id="svg_4"
             />
           )}
+
         </g>
       </svg>
     </div>
