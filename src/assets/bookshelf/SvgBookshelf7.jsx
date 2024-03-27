@@ -25,7 +25,7 @@ function SvgBookshelf7({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 97.5001, 307.5)"
                 fill={colorCodesToRender[0]}
-                stroke="#fff"
+                stroke={colorCodesToRender[0]}
                 x="-86.29413"
                 y="257.65534"
                 width="367.58852"
@@ -51,7 +51,7 @@ function SvgBookshelf7({ booksToRender, colorCodesToRender }) {
               <path
                 transform="rotate(-180, 397.008, 444.465)"
                 fill={colorCodesToRender[1]}
-                stroke="#fff"
+                stroke={colorCodesToRender[1]}
                 opacity="undefined"
                 d="m186.00148,396.74694l422.01358,0l0,95.43583l-422.01358,0l0,-95.43583z"
                 id="svg_7"
@@ -75,7 +75,7 @@ function SvgBookshelf7({ booksToRender, colorCodesToRender }) {
                 d="m198,309.00015l393.00005,0l0,80.00001l-393.00005,0l0,-80.00001z"
                 transform="rotate(-180, 394.5, 349)"
                 opacity="undefined"
-                stroke="#fff"
+                stroke={colorCodesToRender[2]}
                 fill={colorCodesToRender[2]}
               />
             </NavLink>
@@ -95,7 +95,7 @@ function SvgBookshelf7({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 398, 255)"
                 fill={colorCodesToRender[3]}
-                stroke="#fff"
+                stroke={colorCodesToRender[3]}
                 x="351.99993"
                 y="22.00009"
                 width="92"
@@ -120,7 +120,7 @@ function SvgBookshelf7({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[4].id}`}>
               <path
                 fill={colorCodesToRender[4]}
-                stroke="#fff"
+                stroke={colorCodesToRender[4]}
                 opacity="undefined"
                 d="m646.00002,30.99999l111,0l0,463.99999l-111,0l0,-463.99999z"
                 id="svg_3"

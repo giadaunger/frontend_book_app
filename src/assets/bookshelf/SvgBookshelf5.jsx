@@ -23,7 +23,7 @@ function SvgBookshelf5({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[0].id}`}>
               <path
                 fill={colorCodesToRender[0]}
-                stroke="#fff"
+                stroke={colorCodesToRender[0]}
                 opacity="undefined"
                 d="m68.99999,122.00002l121.99993,0l0,371.99997l-121.99993,0l0,-371.99997z"
                 id="svg_3"
@@ -38,12 +38,12 @@ function SvgBookshelf5({ booksToRender, colorCodesToRender }) {
               id="svg_3"
             />
           )}
-          {booksToRender[2] ? (
-            <NavLink to={`/bookpage/${booksToRender[2].id}`}>
+          {booksToRender[1] ? (
+            <NavLink to={`/bookpage/${booksToRender[1].id}`}>
               <rect
                 transform="rotate(11, 299, 257)"
                 fill={colorCodesToRender[2]}
-                stroke="#fff"
+                stroke={colorCodesToRender[1]}
                 x="252.99993"
                 y="24.00009"
                 width="92"
@@ -54,7 +54,7 @@ function SvgBookshelf5({ booksToRender, colorCodesToRender }) {
           ) : (
             <rect
               transform="rotate(11, 299, 257)"
-              fill={colorCodesToRender[2]}
+              fill={colorCodesToRender[1]}
               stroke="#fff"
               x="252.99993"
               y="24.00009"
@@ -68,7 +68,7 @@ function SvgBookshelf5({ booksToRender, colorCodesToRender }) {
               <path
                 transform="rotate(-91, 434.508, 291.965)"
                 fill={colorCodesToRender[2]}
-                stroke="#fff"
+                stroke={colorCodesToRender[2]}
                 opacity="undefined"
                 d="m234.00149,244.74694l401.01357,0l0,94.43582l-401.01357,0l0,-94.43582z"
                 id="svg_7"
@@ -91,7 +91,7 @@ function SvgBookshelf5({ booksToRender, colorCodesToRender }) {
                 d="m315.00004,222.00002l454.00007,0l0,89.00001l-454.00007,0l0,-89.00001z"
                 transform="rotate(-90, 542, 266.5)"
                 opacity="undefined"
-                stroke="#fff"
+                stroke={colorCodesToRender[3]}
                 fill={colorCodesToRender[3]}
               />
             </NavLink>
@@ -110,7 +110,7 @@ function SvgBookshelf5({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[4].id}`}>
               <rect
                 fill={colorCodesToRender[4]}
-                stroke="#fff"
+                stroke={colorCodesToRender[4]}
                 x="457.20583"
                 y="243.15532"
                 width="397.58852"
@@ -121,6 +121,7 @@ function SvgBookshelf5({ booksToRender, colorCodesToRender }) {
             </NavLink>
           ) : (
             <rect
+              fill={colorCodesToRender[4]}
               stroke="#fff"
               x="457.20583"
               y="243.15532"

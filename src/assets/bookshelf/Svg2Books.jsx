@@ -25,7 +25,7 @@ function Svg2Books({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 192.5, 290.5)"
                 fill={colorCodesToRender[0]}
-                stroke="#fff"
+                stroke={colorCodesToRender[0]}
                 x="-10.29426"
                 y="250.34463"
                 width="405.58854"
@@ -51,7 +51,7 @@ function Svg2Books({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 287.907, 309.51)"
                 fill={colorCodesToRender[1]}
-                stroke="#fff"
+                stroke={colorCodesToRender[1]}
                 x="104.68515"
                 y="265.01007"
                 width="366.44358"
