@@ -1,14 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function SvgBooshelf1({ booksToRender, colorCodesToRender }) {
+function SvgBookshelf1({ booksToRender, colorCodesToRender }) {
   return (
     <div className="svg-container w-[10rem] h-[10rem] stroke-8">
-      {" "}
-      {/* Adjust these values as needed */}
       <svg
         className="w-full h-full stroke-8 stroke-white fill-[#34271c]"
-        viewBox="0 0 800 600" // This should match the original width and height
+        viewBox="0 0 800 600" 
         xmlns="http://www.w3.org/2000/svg"
       >
         <g>
@@ -28,6 +26,8 @@ function SvgBooshelf1({ booksToRender, colorCodesToRender }) {
                 d="m108,108l109,0l0,386l-109,0l0,-386z"
                 opacity="undefined"
                 fill={`${colorCodesToRender[0]}`}
+                stroke={`${colorCodesToRender[0]}`}
+                strokeWidth={3}
               />
             </NavLink>
           ) : (
@@ -46,6 +46,8 @@ function SvgBooshelf1({ booksToRender, colorCodesToRender }) {
                 transform="rotate(-12, 320, 298.5)"
                 opacity="undefined"
                 fill={`${colorCodesToRender[1]}`}
+                stroke={`${colorCodesToRender[1]}`}
+                strokeWidth={3}
               />
             </NavLink>
           ) : (
@@ -64,6 +66,8 @@ function SvgBooshelf1({ booksToRender, colorCodesToRender }) {
                 d="m423,152l79,0l0,342l-79,0l0,-342z"
                 opacity="undefined"
                 fill={`${colorCodesToRender[2]}`}
+                stroke={`${colorCodesToRender[2]}`}
+                strokeWidth={3}
               />
             </NavLink>
           ) : (
@@ -81,6 +85,8 @@ function SvgBooshelf1({ booksToRender, colorCodesToRender }) {
                 d="m511,70l76,0l0,424l-76,0l0,-424z"
                 opacity="undefined"
                 fill={`${colorCodesToRender[3]}`}
+                stroke={`${colorCodesToRender[3]}`}
+                strokeWidth={3}
               />
             </NavLink>
           ) : (
@@ -98,6 +104,8 @@ function SvgBooshelf1({ booksToRender, colorCodesToRender }) {
             d="m595,124l77,0l0,370l-77,0l0,-370z"
             opacity="undefined"
             fill={`${colorCodesToRender[4]}`}
+            stroke={`${colorCodesToRender[4]}`}
+            strokeWidth={3}
           />
             </NavLink>
           ) : (
@@ -114,4 +122,4 @@ function SvgBooshelf1({ booksToRender, colorCodesToRender }) {
   );
 }
 
-export default SvgBooshelf1;
+export default SvgBookshelf1;

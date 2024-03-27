@@ -1,14 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function SvgBooshelf2({ booksToRender, colorCodesToRender }) {
+function SvgBookshelf2({ booksToRender, colorCodesToRender }) {
   return (
     <div className="svg-container w-[10rem] h-[10rem] stroke-8">
-      {" "}
-      {/* Adjust these values as needed */}
+
       <svg
         className="w-full h-full stroke-8 stroke-white fill-[#34271c]"
-        viewBox="0 0 800 600" // This should match the original width and height
+        viewBox="0 0 800 600"
         xmlns="http://www.w3.org/2000/svg"
       >
         <g>
@@ -92,6 +91,27 @@ function SvgBooshelf2({ booksToRender, colorCodesToRender }) {
           )}
           {booksToRender[3] ? (
             <NavLink to={`/bookpage/${booksToRender[3].id}`}>
+                        <path
+            transform="rotate(-90, 338, 183.5)"
+            fill={colorCodesToRender[4]}
+            stroke="#fff"
+            opacity="undefined"
+            d="m293,-51l90,0l0,469.00002l-90,0l0,-469.00002z"
+            id="svg_7"
+          />
+            </NavLink>
+          ) : (
+            <path
+            transform="rotate(-90, 338, 183.5)"
+            fill={colorCodesToRender[3]}
+            stroke="#fff"
+            opacity="undefined"
+            d="m293,-51l90,0l0,469.00002l-90,0l0,-469.00002z"
+            id="svg_7"
+          />
+          )}
+          {booksToRender[4] ? (
+            <NavLink to={`/bookpage/${booksToRender[4].id}`}>
                      <rect
             transform="rotate(-90, 415.5, 91.5)"
             fill={colorCodesToRender[3]}
@@ -106,7 +126,7 @@ function SvgBooshelf2({ booksToRender, colorCodesToRender }) {
           ) : (
             <rect
             transform="rotate(-90, 415.5, 91.5)"
-            fill={colorCodesToRender[3]}
+            fill={colorCodesToRender[4]}
             stroke="#fff"
             x="374.5"
             y="-152.50001"
@@ -115,31 +135,10 @@ function SvgBooshelf2({ booksToRender, colorCodesToRender }) {
             id="svg_6"
           />
           )}
-          {booksToRender[4] ? (
-            <NavLink to={`/bookpage/${booksToRender[4].id}`}>
-                        <path
-            transform="rotate(-90, 338, 183.5)"
-            fill={colorCodesToRender[4]}
-            stroke="#fff"
-            opacity="undefined"
-            d="m293,-51l90,0l0,469.00002l-90,0l0,-469.00002z"
-            id="svg_7"
-          />
-            </NavLink>
-          ) : (
-            <path
-            transform="rotate(-90, 338, 183.5)"
-            fill={colorCodesToRender[4]}
-            stroke="#fff"
-            opacity="undefined"
-            d="m293,-51l90,0l0,469.00002l-90,0l0,-469.00002z"
-            id="svg_7"
-          />
-          )}
         </g>
       </svg>
     </div>
   );
 }
 
-export default SvgBooshelf2;
+export default SvgBookshelf2;
