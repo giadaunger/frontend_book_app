@@ -24,7 +24,7 @@ function SvgBookshelf2({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[0].id}`}>
               <path
             fill={colorCodesToRender[0]}
-            stroke="#fff"
+            stroke={colorCodesToRender[0]}
             opacity="undefined"
             d="m108,407.00001l493.99997,0l0,86.99999l-493.99997,0l0,-86.99999z"
             id="svg_3"
@@ -43,7 +43,7 @@ function SvgBookshelf2({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[1].id}`}>
                        <rect
             fill={colorCodesToRender[1]}
-            stroke="#fff"
+            stroke={colorCodesToRender[1]}
             x="381.5"
             y="136.5"
             width="88"
@@ -69,7 +69,7 @@ function SvgBookshelf2({ booksToRender, colorCodesToRender }) {
                         <rect
             transform="rotate(-90, 358, 271)"
             fill={colorCodesToRender[2]}
-            stroke="#fff"
+            stroke={colorCodesToRender[2]}
             x="323.9999"
             y="73.99994"
             width="68"
@@ -93,8 +93,8 @@ function SvgBookshelf2({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[3].id}`}>
                         <path
             transform="rotate(-90, 338, 183.5)"
-            fill={colorCodesToRender[4]}
-            stroke="#fff"
+            fill={colorCodesToRender[3]}
+            stroke={colorCodesToRender[3]}
             opacity="undefined"
             d="m293,-51l90,0l0,469.00002l-90,0l0,-469.00002z"
             id="svg_7"
@@ -114,8 +114,8 @@ function SvgBookshelf2({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[4].id}`}>
                      <rect
             transform="rotate(-90, 415.5, 91.5)"
-            fill={colorCodesToRender[3]}
-            stroke="#fff"
+            fill={colorCodesToRender[4]}
+            stroke={colorCodesToRender[4]}
             x="374.5"
             y="-152.50001"
             width="82"
