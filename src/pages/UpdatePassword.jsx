@@ -10,18 +10,19 @@ function UpdatePassword() {
     const [repeatedPassword, setRepeatedPassword] = useState("");
     const [error, setError] = useState("");
     const [verify, setVerify] = useState("");
-    const navigate = useNavigate();
+    const [passwordEdited, setPasswordEdited] = useState(false); 
 
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value;
         setPassword(newPassword);
+        setPasswordEdited(true); 
 
         if (newPassword.length < 5) {
-            setPasswordErrMsg("Password too short, minimum of 5 characters");
+            setError("Password too short, minimum of 5 characters");
         } else if (newPassword.length > 100) {
-            setPasswordErrMsg("Password too long, maximum of 100 characters");
+            setError("Password too long, maximum of 100 characters");
         } else {
-            setPasswordErrMsg("");
+            setError("");
         }
     };
 
@@ -31,6 +32,8 @@ function UpdatePassword() {
 
         if (verifyPassword !== password) {
             setVerify("Password don't match")
+        } else {
+            setVerify("")
         }
     }
 
@@ -47,6 +50,10 @@ function UpdatePassword() {
         } catch (error) {
             console.error("Error updating user:", error);
         }
+    };
+
+    const isSubmitDisabled = () => {
+        return error || verify || !passwordEdited;
     };
 
     return (
@@ -67,7 +74,6 @@ function UpdatePassword() {
                             placeholder="Enter your new password"
                             className="mb-4 border border-black rounded-md p-2"
                         />
-                        {error && <p className="text-red-500">{error}</p>}
                         <label htmlFor="password">Repeat password:</label>
                         <input
                             value={repeatedPassword}
@@ -76,11 +82,17 @@ function UpdatePassword() {
                             placeholder="Repeat your password"
                             className="mb-4 border border-black rounded-md p-2"
                         />
-                        {error && <p className="text-red-500">{error}</p>}
+                        <div className="text-red-500 text-center mb-10">
+                            {verify && <p>{verify}</p>}
+                            {error && <p>{error}</p>}
+                        </div>
                         <button
                             type="submit"
-                            className="border border-black rounded-md p-2 mx-auto bg-white"
-                        >
+                            className={`border rounded-md border-black p-2 shadow-md transition duration-300 hover:scale-125  hover:bg-[#f2d2ba] hover:border-[#e8a372] ${isSubmitDisabled()
+                                ? "text-gray-500 pointer-events-none border-gray-500"
+                                : "border-black"
+                                }`}
+                            disabled={isSubmitDisabled()}                        >
                             Update pasword
                         </button>
                     </div>
