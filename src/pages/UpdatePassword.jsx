@@ -10,11 +10,12 @@ function UpdatePassword() {
     const [repeatedPassword, setRepeatedPassword] = useState("");
     const [error, setError] = useState("");
     const [verify, setVerify] = useState("");
-    const navigate = useNavigate();
+    const [passwordEdited, setPasswordEdited] = useState(false); 
 
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value;
         setPassword(newPassword);
+        setPasswordEdited(true); 
 
         if (newPassword.length < 5) {
             setError("Password too short, minimum of 5 characters");
@@ -52,7 +53,7 @@ function UpdatePassword() {
     };
 
     const isSubmitDisabled = () => {
-        return error || verify;
+        return error || verify || !passwordEdited;
     };
 
     return (
