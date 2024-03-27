@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
-import useStore from "../store/ReadingBooksStore";
+import ReadingBooksStore from "../store/ReadingBooksStore";
 import { useCookies } from "react-cookie";
 import { NavLink, useNavigate } from "react-router-dom";
+import ReadBooksStore from "../store/ReadBooksStore";
 import ReadingBook from "./ReadingBook";
 
 function ReadingBooks() {
-  const { readingBooks, fetchReadingBooks, fetchUpdatePages } = useStore();
+  const { readingBooks, fetchReadingBooks, fetchUpdatePages } = ReadingBooksStore();
+  const {fetchReadBooks} = ReadBooksStore()
   const [cookies] = useCookies(["user"]);
   const [pageModal, setPageModal] = useState(false);
   const [bookPage, setBookPage] = useState(0);
@@ -35,6 +37,7 @@ function ReadingBooks() {
 
   async function fetch(){
     fetchReadingBooks()
+    fetchReadBooks()
   }
 
   async function checkPagesUpdate(event, bookVersionId, bookPage) {

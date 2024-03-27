@@ -62,9 +62,6 @@ function DashboardStatistics() {
         }
     }, [user, readBooks]);
 
-    useEffect(() => {
-        fetchReadBooks();
-    }, [readBooks]);
 
     const addBookGoal = () => {
         setShowInput(true);

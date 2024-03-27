@@ -1,83 +1,87 @@
 import React, { useEffect, useState } from "react";
 import ReadBooksStore from "../store/ReadBooksStore";
-import { NavLink } from "react-router-dom";
+import SvgBookshelf1 from "../assets/bookshelf/SvgBookshelf1";
+import BookGoalStore from "../store/BookGoalStore";
+import SvgBookshelf2 from "../assets/bookshelf/SvgBookshelf2";
+import SvgBookshelf3 from "../assets/bookshelf/SvgBookshelf3";
+import SvgBookshelf4 from "../assets/bookshelf/SvgBookshelf4";
+import SvgBookshelf5 from "../assets/bookshelf/SvgBookshelf5";
+import SvgBookshelf6 from "../assets/bookshelf/SvgBookshelf6";
+import SvgBookshelf7 from "../assets/bookshelf/SvgBookshelf7";
+import SvgBookshelf8 from "../assets/bookshelf/SvgBookshelf8";
+import SvgBookshelf9 from "../assets/bookshelf/SvgBookshelf9";
+import SvgBookshelf10 from "../assets/bookshelf/SvgBookshelf10";
+import Svg1Book from "../assets/bookshelf/Svg1Book";
+import Svg2Books from "../assets/bookshelf/Svg2Books";
+import Svg3Books from "../assets/bookshelf/Svg3Books";
+import Svg4Books from "../assets/bookshelf/Svg4Books";
 
 function BookGoalShelf() {
   const [colorCodes, setColorCodes] = useState([]);
   const { readBooks, fetchReadBooks } = ReadBooksStore();
+  const { fetchBookGoal, bookGoal } = BookGoalStore();
+  const bookshelves = [
+    SvgBookshelf1,
+    SvgBookshelf2,
+    SvgBookshelf3,
+    SvgBookshelf4,
+    SvgBookshelf5,
+    SvgBookshelf6,
+    SvgBookshelf7,
+    SvgBookshelf8,
+    SvgBookshelf9,
+    SvgBookshelf10
+  ];
+
+  const lessThan5Books = [Svg1Book, Svg2Books, Svg3Books, Svg4Books]
 
   useEffect(() => {
     fetchReadBooks();
+    fetchBookGoal();
   }, []);
 
   useEffect(() => {
     if (readBooks) {
-      const tempColor = []
+      const tempColor = [];
       readBooks.map((book) => {
         console.log(book.book_version.book.main_category.color_code);
         tempColor.push(book.book_version.book.main_category.color_code);
       });
-      setColorCodes(tempColor)
+      setColorCodes(tempColor);
     }
   }, [readBooks]);
 
   console.log("colorCodes:", colorCodes);
   return (
-    <div className="bg-[#f8f2e9]">
-      <div className="absolute bg-black hidden">heeyy</div>
-      {readBooks[0] && <svg
-        className="scale-[0.20] origin-top-left stroke-8 stroke-white fill-[#f8f2e9]"
-        width="800"
-        height="600"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g>
-          <title>Layer 1</title>
-          <path
-            className="stroke-3"
-            id="svg_2"
-            d="m13,499l766,0l0,87l-766,0l0,-87z"
-            opacity="undefined"
-            stroke="#4a3728"
-            fill="#4a3728"
-          />
-          <NavLink to={`/bookpage/${readBooks[0].id}`}>
-            <path
-              id="svg_3"
-              d="m108,108l109,0l0,386l-109,0l0,-386z"
-              opacity="undefined"
-              fill={`${colorCodes[0]}`}
-            />
-          </NavLink>
-          <path
-            id="svg_4"
-            d="m256,111l128,0l0,375l-128,0l0,-375z"
-            transform="rotate(-12, 320, 298.5)"
-            opacity="undefined"
-            fill={`${colorCodes[1]}`}
-          />
-          <path
-            id="svg_5"
-            d="m423,152l79,0l0,342l-79,0l0,-342z"
-            opacity="undefined"
-            fill={`${colorCodes[2]}`}
-          />
-          <path
-            id="svg_6"
-            d="m511,70l76,0l0,424l-76,0l0,-424z"
-            opacity="undefined"
-            fill={`${colorCodes[3]}`}
-          />
-          <path
-            id="svg_7"
-            d="m595,124l77,0l0,370l-77,0l0,-370z"
-            opacity="undefined"
-            fill={`${colorCodes[4]}`}
-          />
-        </g>
-      </svg>}
+    <div className="bg-[#34271c]">
+      {readBooks && (
+        <>
+          {bookGoal && (
+            <div className="flex flex-wrap justify-center w-[2/3]">
+              {Array.from({ length: bookGoal / 5 }).map((_, index) => {
+                const ComponentToRender = bookshelves[index % bookshelves.length];
+                const start = 5 * index;
+                const end = start + 5; // Assuming you want slices of 5 items each time
+
+                // Use the calculated indices to slice the readBooks array
+                const booksToRender = readBooks.slice(start, end);
+                const colorCodesToRender = colorCodes.slice(start, end);
+
+                console.log(colorCodesToRender);
+                return (
+                  <div key={index}>
+                    <ComponentToRender
+                      colorCodesToRender={colorCodesToRender}
+                      booksToRender={booksToRender}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }
-
 export default BookGoalShelf;

@@ -53,7 +53,7 @@ function SignedInNav() {
                     </div>
                     <div className={`lg:flex ${isOpen ? 'flex flex-col rounded-b-lg shadow-md lg:shadow-none absolute top-24 md:w-[30%] lg:w-full right-0 bg-[#f8f2e9] p-5 lg:flex-row lg:relative lg:top-0' : 'hidden lg:visible'} lg:items-center lg:gap-40`}>
                         <div className="flex flex-col lg:flex-row lg:w-full">
-                            <NavLink to="/" className={`mr-5 transition duration-300 hover:scale-110 hover:text-[#71bfd9] ${location.pathname === '/' ? 'text-[#7ad56a]' : ''}`}>Bookshelf</NavLink>
+                            <NavLink to="/bookgoal" className={`mr-5 transition duration-300 hover:scale-110 hover:text-[#71bfd9] ${location.pathname === '/bookgoal' ? 'text-[#7ad56a]' : ''}`}>Bookshelf</NavLink>
                             <NavLink to="/statistics" className={`mr-5 transition duration-300 hover:scale-110 hover:text-[#71bfd9] ${location.pathname === '/statistics' ? 'text-[#7ad56a]' : ''}`}>Statistics</NavLink>
                             <NavLink to="/findbooks" className={`mr-5 transition duration-300 hover:scale-110 hover:text-[#71bfd9] ${location.pathname === '/findbooks' ? 'text-[#7ad56a]' : ''}`}>Find Books</NavLink>
                             <NavLink to="/mybooks" className={`mr-5 mb-5 lg:mb-0 transition duration-300 hover:scale-110 hover:text-[#71bfd9] ${location.pathname === '/mybooks' ? 'text-[#7ad56a]' : ''}`}>My Books</NavLink>
