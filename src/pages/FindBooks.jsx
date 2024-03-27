@@ -8,40 +8,59 @@ import { NavLink } from "react-router-dom";
 function FindBooks() {
   const { foundBooks, fetchPopularEditions, foundEditions, addToReading } =
     FindBooksStore();
-  const { fetchReadingBooks, readingBooks,booksReading, setBooksReading } = ReadingBookStore();
+  const { fetchReadingBooks, readingBooks, booksReading, setBooksReading } = ReadingBookStore();
   const [bookAddModal, setBookAddModal] = useState(false);
   const [addedModal, setAddedModal] = useState(false);
   const [editions, setEditions] = useState([]);
   const [currentBook, setCurrentBook] = useState()
   const ref = useRef(null);
 
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1); // Current page number
+  const [totalPages, setTotalPages] = useState(1); // Total number of pages
+  const PAGE_SIZE = 10; // Number of items per page
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const endIndex = Math.min(startIndex + PAGE_SIZE, foundBooks.length);
+  // const booksToDisplay = foundBooks.slice(startIndex, endIndex);
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+
   useEffect(() => {
-    async function fetch(){
-        fetchReadingBooks()
+    async function fetch() {
+      fetchReadingBooks()
     }
     fetch();
   }, []);
 
-  useEffect(()=>{
-    if (readingBooks){    
-        setBooksReading(readingBooks)
+  useEffect(() => {
+    if (readingBooks) {
+      setBooksReading(readingBooks)
     }
-  },[readingBooks])
+  }, [readingBooks])
 
   async function addBook(event, book) {
     event.preventDefault;
     const response = await addToReading(book.id);
     if (response == true) {
-        async function fetch(){
-            fetchReadingBooks()
-        }
-        fetch();
+      async function fetch() {
+        fetchReadingBooks()
+      }
+      fetch();
       setBookAddModal(false);
       setAddedModal(true);
     }
   }
 
-  async function fetchEditions() {}
+  async function fetchEditions() { }
 
   useEffect(() => {
     const handleOutSideClick = (event) => {
@@ -71,8 +90,8 @@ function FindBooks() {
     <div className="">
       {addedModal && (
         <div
-        ref={ref}
-         className="flex justify-center">
+          ref={ref}
+          className="flex justify-center">
           <div className="fixed flex justify-center items-center w-72 mt-[10vh] text-cetner bg-white shadow-md mx-auto p-4 rounded-lg">
             Book added to reading
           </div>
@@ -135,7 +154,7 @@ function FindBooks() {
               </div>
             </div>
             <button
-              onClick={(e) => {}}
+              onClick={(e) => { }}
               className="bg-blue-500 shadow-md text-white py-1 mx-auto px-3 rounded-lg"
             >
               None fit your book?
@@ -160,12 +179,12 @@ function FindBooks() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-2 gap-x-3 md:w-2/3 w-11/12 mt-10">
           {foundBooks &&
-            foundBooks.filter((el)=> el.versions.length > 0).map((book) => {
+            foundBooks.filter((el) => el.versions.length > 0).map((book) => {
               return (
                 <div>
                   {book && (
                     <BookSearchBook
-                    setCurrentBook = {() => setCurrentBook()}
+                      setCurrentBook={() => setCurrentBook()}
                       book={book}
                       handleModal={(e) => handleModal(e)}
                     />
@@ -174,6 +193,22 @@ function FindBooks() {
               );
             })}
         </div>
+      </div>
+
+      <div className="pagination">
+        <button
+          onClick={goToPreviousPage}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>{currentPage}</span> / <span>{totalPages}</span>
+        <button
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
