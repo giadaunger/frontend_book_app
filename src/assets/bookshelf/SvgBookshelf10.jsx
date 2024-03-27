@@ -25,7 +25,7 @@ function SvgBookshelf10({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 192.5, 290.5)"
                 fill={colorCodesToRender[0]}
-                stroke="#fff"
+                stroke={colorCodesToRender[0]}
                 x="-10.29426"
                 y="250.34463"
                 width="405.58854"
@@ -51,7 +51,7 @@ function SvgBookshelf10({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 287.907, 309.51)"
                 fill={colorCodesToRender[1]}
-                stroke="#fff"
+                stroke={colorCodesToRender[1]}
                 x="104.68515"
                 y="265.01007"
                 width="366.44358"
@@ -76,7 +76,7 @@ function SvgBookshelf10({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[2].id}`}>
               <path
                 fill={colorCodesToRender[2]}
-                stroke="#fff"
+                stroke={colorCodesToRender[2]}
                 opacity="undefined"
                 d="m346.95894,41.63796l96.08215,0l0,450.72406l-96.08215,0l0,-450.72406z"
                 id="svg_3"
@@ -96,7 +96,7 @@ function SvgBookshelf10({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[3].id}`}>
               <path
                 fill={colorCodesToRender[3]}
-                stroke="#fff"
+                stroke={colorCodesToRender[3]}
                 opacity="undefined"
                 d="m456.64922,124.11218l86.71836,0l0,368.70485l-86.71836,0l0,-368.70485z"
                 id="svg_7"
@@ -119,7 +119,7 @@ function SvgBookshelf10({ booksToRender, colorCodesToRender }) {
                 d="m373.053,223.57139l444.89389,0l0,93.85736l-444.89389,0l0,-93.85736z"
                 transform="rotate(-90, 595.5, 270.5)"
                 opacity="undefined"
-                stroke="#fff"
+                stroke={colorCodesToRender[4]}
                 fill={colorCodesToRender[4]}
               />
             </NavLink>

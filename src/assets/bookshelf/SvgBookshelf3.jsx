@@ -23,7 +23,7 @@ function SvgBookshelf3({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[0].id}`}>
               <path
                 fill={colorCodesToRender[0]}
-                stroke="#fff"
+                stroke={colorCodesToRender[0]}
                 opacity="undefined"
                 d="m108,389.00002l482.99997,0l0,104.99999l-482.99997,0l0,-104.99999z"
                 id="svg_3"
@@ -42,7 +42,7 @@ function SvgBookshelf3({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[1].id}`}>
               <rect
                 fill={colorCodesToRender[1]}
-                stroke="#fff"
+                stroke={colorCodesToRender[1]}
                 x="217.5"
                 y="119.5"
                 width="88"
@@ -68,7 +68,7 @@ function SvgBookshelf3({ booksToRender, colorCodesToRender }) {
               <path
                 transform="rotate(-90, 313, 244.5)"
                 fill={colorCodesToRender[2]}
-                stroke="#fff"
+                stroke={colorCodesToRender[2]}
                 opacity="undefined"
                 d="m268,10l90,0l0,469.00002l-90,0l0,-469.00002z"
                 id="svg_7"
@@ -90,7 +90,7 @@ function SvgBookshelf3({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 307.5, 153.5)"
                 fill={colorCodesToRender[3]}
-                stroke="#fff"
+                stroke={colorCodesToRender[3]}
                 x="266.5"
                 y="-90.50001"
                 width="82"
@@ -115,8 +115,8 @@ function SvgBookshelf3({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[4].id}`}>
               <rect
                 transform="rotate(-13, 636, 257)"
-                fill={colorCodesToRender[2]}
-                stroke="#fff"
+                fill={colorCodesToRender[4]}
+                stroke={colorCodesToRender[4]}
                 x="589.99993"
                 y="24.00009"
                 width="92"

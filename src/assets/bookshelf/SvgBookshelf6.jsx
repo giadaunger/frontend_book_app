@@ -25,7 +25,7 @@ function SvgBookshelf6({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 114, 295.5)"
                 fill={colorCodesToRender[0]}
-                stroke="#fff"
+                stroke={colorCodesToRender[0]}
                 x="-84.79417"
                 y="246.15532"
                 width="397.58852"
@@ -49,8 +49,8 @@ function SvgBookshelf6({ booksToRender, colorCodesToRender }) {
             <NavLink to={`/bookpage/${booksToRender[1].id}`}>
               <rect
                 transform="rotate(11, 266, 259)"
-                fill={colorCodesToRender[2]}
-                stroke="#fff"
+                fill={colorCodesToRender[1]}
+                stroke={colorCodesToRender[1]}
                 x="219.99993"
                 y="26.00009"
                 width="92"
@@ -73,8 +73,8 @@ function SvgBookshelf6({ booksToRender, colorCodesToRender }) {
           {booksToRender[2] ? (
             <NavLink to={`/bookpage/${booksToRender[2].id}`}>
               <path
-                fill={colorCodesToRender[0]}
-                stroke="#fff"
+                fill={colorCodesToRender[2]}
+                stroke={colorCodesToRender[2]}
                 opacity="undefined"
                 d="m317,412.00003l439.99999,0l0,81.99997l-439.99999,0l0,-81.99997z"
                 id="svg_3"
@@ -94,7 +94,7 @@ function SvgBookshelf6({ booksToRender, colorCodesToRender }) {
               <path
                 transform="rotate(-180, 556.008, 358.465)"
                 fill={colorCodesToRender[3]}
-                stroke="#fff"
+                stroke={colorCodesToRender[3]}
                 opacity="undefined"
                 d="m345.00148,310.74694l422.01358,0l0,95.43583l-422.01358,0l0,-95.43583z"
                 id="svg_7"
@@ -117,7 +117,7 @@ function SvgBookshelf6({ booksToRender, colorCodesToRender }) {
                 d="m327.00004,212.00008l436.00007,0l0,93.00001l-436.00007,0l0,-93.00001z"
                 transform="rotate(-180, 545, 258.5)"
                 opacity="undefined"
-                stroke="#fff"
+                stroke={colorCodesToRender[4]}
                 fill={colorCodesToRender[4]}
               />
             </NavLink>

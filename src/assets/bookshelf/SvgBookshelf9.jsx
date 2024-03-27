@@ -25,7 +25,7 @@ function SvgBookshelf9({ booksToRender, colorCodesToRender }) {
               <rect
                 transform="rotate(-90, 117.5, 276)"
                 fill={colorCodesToRender[0]}
-                stroke="#fff"
+                stroke={colorCodesToRender[0]}
                 x="-100.79416"
                 y="202.84478"
                 width="436.58853"
@@ -37,7 +37,7 @@ function SvgBookshelf9({ booksToRender, colorCodesToRender }) {
             <rect
               transform="rotate(-90, 117.5, 276)"
               fill={colorCodesToRender[0]}
-              stroke="#fff"
+              stroke={colorCodesToRender[1]}
               x="-100.79416"
               y="202.84478"
               width="436.58853"
@@ -77,7 +77,7 @@ function SvgBookshelf9({ booksToRender, colorCodesToRender }) {
               <path
                 transform="rotate(-12, 372, 265)"
                 fill={colorCodesToRender[2]}
-                stroke="#fff"
+                stroke={colorCodesToRender[2]}
                 opacity="undefined"
                 d="m323.95895,41.63795l96.08214,0l0,446.72407l-96.08214,0l0,-446.72407z"
                 id="svg_3"
@@ -99,7 +99,7 @@ function SvgBookshelf9({ booksToRender, colorCodesToRender }) {
               <path
                 transform="rotate(-13, 481.008, 305.465)"
                 fill={colorCodesToRender[3]}
-                stroke="#fff"
+                stroke={colorCodesToRender[3]}
                 opacity="undefined"
                 d="m437.64922,121.11218l86.71836,0l0,368.70485l-86.71836,0l0,-368.70485z"
                 id="svg_7"
@@ -123,7 +123,7 @@ function SvgBookshelf9({ booksToRender, colorCodesToRender }) {
                 d="m349.053,219.57139l444.89389,0l0,93.85736l-444.89389,0l0,-93.85736z"
                 transform="rotate(-104, 571.5, 266.5)"
                 opacity="undefined"
-                stroke="#fff"
+                stroke={colorCodesToRender[4]}
                 fill={colorCodesToRender[4]}
               />
             </NavLink>
