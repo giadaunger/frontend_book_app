@@ -172,16 +172,33 @@ function FindBooks() {
         </div>
         <nav className="flex justify-center my-4">
           <ul className="flex">
+            <li>
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] mr-10"
+              >
+                Previous
+              </button>
+            </li>
             {Array.from({ length: Math.ceil(foundBooks.length / itemsPerPage) }, (_, i) => (
               <li key={i} className="flex">
-                <button onClick={() => paginate(i + 1)} className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9]">
+                <button onClick={() => paginate(i + 1)} className={`inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ${currentPage === i + 1 ? 'bg-[#f5dece] border border-[#e8a372]' : ''}`}>
                   {i + 1}
                 </button>
               </li>
             ))}
+            <li>
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === Math.ceil(foundBooks.length / itemsPerPage)}
+                className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ml-10"
+              >
+                Next
+              </button>
+            </li>
           </ul>
         </nav>
-
       </div>
     </div>
   );
