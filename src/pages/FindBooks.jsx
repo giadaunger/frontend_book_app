@@ -14,7 +14,7 @@ function FindBooks() {
   const [editions, setEditions] = useState([]);
   const [currentBook, setCurrentBook] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -71,12 +71,12 @@ function FindBooks() {
   if (Array.isArray(foundBooks)) {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    currentBooks = foundBooks.slice(indexOfFirstItem, indexOfLastItem);
+    currentBooks = foundBooks.filter(el => el.versions[0]).slice(indexOfFirstItem, indexOfLastItem);
   }
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="">
+    <div className="flex flex-col justify-center">
       {addedModal && (
         <div ref={ref} className="flex justify-center">
           <div className="fixed flex justify-center items-center w-72 mt-[10vh] text-cetner bg-white shadow-md mx-auto p-4 rounded-lg">
@@ -155,8 +155,9 @@ function FindBooks() {
         <div className="flex justify-center">
           <SearchBar />
         </div>
+        {console.log(currentBooks)}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-2 gap-x-3 md:w-2/3 w-11/12 mt-10">
-          {currentBooks.map((book) => {
+          {currentBooks.filter(el => el.versions[0]).map((book) => {
             return (
               <div key={book.id}>
                 {book && (
@@ -171,7 +172,7 @@ function FindBooks() {
           })}
         </div>
         <nav className="flex justify-center my-4">
-          <ul className="flex">
+          <ul className="flex justify-center">
             <li>
               <button
                 onClick={() => setCurrentPage(currentPage - 1)}
@@ -180,8 +181,8 @@ function FindBooks() {
               >
                 Previous
               </button>
-            </li>
-            {Array.from({ length: Math.ceil(foundBooks.length / itemsPerPage) }, (_, i) => (
+            </li >
+            {Array.from({ length: Math.ceil(foundBooks.filter(el => el.versions[0]).length / itemsPerPage) }, (_, i) => (
               <li key={i} className="flex">
                 <button onClick={() => paginate(i + 1)} className={`inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ${currentPage === i + 1 ? 'bg-[#f5dece] border border-[#e8a372]' : ''}`}>
                   {i + 1}
@@ -191,7 +192,7 @@ function FindBooks() {
             <li>
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage === Math.ceil(foundBooks.length / itemsPerPage)}
+                disabled={currentPage === Math.ceil(foundBooks.filter(el => el.versions[0]).length / itemsPerPage)}
                 className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ml-10"
               >
                 Next

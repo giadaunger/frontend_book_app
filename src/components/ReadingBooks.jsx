@@ -9,7 +9,6 @@ import ReadingBook from "./ReadingBook";
 function ReadingBooks() {
   const { readingBooks, fetchReadingBooks, fetchUpdatePages } = ReadingBooksStore();
   const {fetchReadBooks} = ReadBooksStore()
-  const [cookies] = useCookies(["user"]);
   const [pageModal, setPageModal] = useState(false);
   const [bookPage, setBookPage] = useState(0);
   const [currentBook, setCurrentBook] = useState(null);
@@ -116,7 +115,7 @@ function ReadingBooks() {
       </div>
       <div className="flex flex-col mx-auto gap-4 min-w-[60vw]">
           {readingBooks &&
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 min-w-[60vw]">
+        <div className="flex flex-wrap justify-center gap-4 min-w-[60vw]">
             {readingBooks.slice(0, 3).map((book) => {
               return (
                 <div className="">
