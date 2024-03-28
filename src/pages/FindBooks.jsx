@@ -14,7 +14,7 @@ function FindBooks() {
   const [editions, setEditions] = useState([]);
   const [currentBook, setCurrentBook] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const ref = useRef(null);
 
   useEffect(() => {
