@@ -172,32 +172,51 @@ function FindBooks() {
           })}
         </div>
         <nav className="flex justify-center my-4">
-          <ul className="flex justify-center">
-            <li>
-              <button
-                onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] mr-10"
-              >
-                Previous
-              </button>
-            </li >
-            {Array.from({ length: Math.ceil(foundBooks.filter(el => el.versions[0]).length / itemsPerPage) }, (_, i) => (
-              <li key={i} className="flex">
-                <button onClick={() => paginate(i + 1)} className={`inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ${currentPage === i + 1 ? 'bg-[#f5dece] border border-[#e8a372]' : ''}`}>
-                  {i + 1}
+          <ul className="flex">
+            {currentPage > 1 && (
+              <li>
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] mr-10"
+                >
+                  Previous
                 </button>
               </li>
-            ))}
-            <li>
-              <button
-                onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage === Math.ceil(foundBooks.filter(el => el.versions[0]).length / itemsPerPage)}
-                className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ml-10"
-              >
-                Next
-              </button>
-            </li>
+            )}
+            {Array.from({ length: Math.ceil(foundBooks.length / itemsPerPage) }, (_, i) => {
+              if (
+                i === 0 || 
+                i === currentPage - 1 || 
+                i === Math.ceil(foundBooks.length / itemsPerPage) - 1 || 
+                (i >= currentPage - 1 && i <= currentPage + 1) ||
+                (i === currentPage - 3 && currentPage > 4) || 
+                (i === currentPage + 1 && currentPage < Math.ceil(foundBooks.length / itemsPerPage) - 1) 
+              ) {
+                return (
+                  <li key={i} className="flex">
+                    <button
+                      onClick={() => paginate(i + 1)}
+                      className={`inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ${currentPage === i + 1 ? 'bg-[#f5dece] border border-[#e8a372]' : ''}`}
+                    >
+                      {i + 1}
+                    </button>
+                  </li>
+                );
+              } else if ((i === currentPage - 4 && currentPage > 4) || (i === currentPage + 3 && currentPage < Math.ceil(foundBooks.length / itemsPerPage) - 3)) {
+                return <li key={i}>...</li>;
+              }
+              return null;
+            })}
+            {currentPage < Math.ceil(foundBooks.length / itemsPerPage) && (
+              <li>
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9] ml-10"
+                >
+                  Next
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
