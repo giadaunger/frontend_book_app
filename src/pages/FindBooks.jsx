@@ -14,7 +14,7 @@ function FindBooks() {
   const [editions, setEditions] = useState([]);
   const [currentBook, setCurrentBook] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3); 
+  const [itemsPerPage, setItemsPerPage] = useState(3);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function FindBooks() {
     }
   }
 
-  async function fetchEditions() {}
+  async function fetchEditions() { }
 
   useEffect(() => {
     const handleOutSideClick = (event) => {
@@ -134,7 +134,7 @@ function FindBooks() {
                 )}
               </div>
             </div>
-            <button onClick={(e) => {}} className="bg-blue-500 shadow-md text-white py-1 mx-auto px-3 rounded-lg">
+            <button onClick={(e) => { }} className="bg-blue-500 shadow-md text-white py-1 mx-auto px-3 rounded-lg">
               None fit your book?
             </button>
             <div className="flex">
@@ -171,16 +171,17 @@ function FindBooks() {
           })}
         </div>
         <nav className="flex justify-center my-4">
-          <ul>
+          <ul className="flex">
             {Array.from({ length: Math.ceil(foundBooks.length / itemsPerPage) }, (_, i) => (
-              <li key={i}>
-                <button onClick={() => paginate(i + 1)}>
+              <li key={i} className="flex">
+                <button onClick={() => paginate(i + 1)} className="inline mx-1 px-2 py-1 border border-black rounded transition duration-300 hover:scale-125 hover:bg-[#ccebf5] hover:border-[#71bfd9]">
                   {i + 1}
                 </button>
               </li>
             ))}
           </ul>
         </nav>
+
       </div>
     </div>
   );
